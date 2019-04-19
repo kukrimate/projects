@@ -1,0 +1,11 @@
+# /etc/inittab -- init configuration minipi
+
+# Startup script
+::sysinit:/etc/init.d/rc.startup
+
+# Run getty
+tty1::respawn:/sbin/getty 38400 tty1
+tty2::respawn:/sbin/getty 38400 tty2
+
+# Serial terminal
+ttyS0::askfirst:/bin/sh -

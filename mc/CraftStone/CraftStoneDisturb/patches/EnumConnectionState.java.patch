@@ -1,0 +1,33 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\EnumConnectionState.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\EnumConnectionState.java	2014-11-28 14:55:04.825311100 +0100
+@@ -3,10 +3,13 @@
+ import com.google.common.collect.BiMap;
+ import com.google.common.collect.HashBiMap;
+ import com.google.common.collect.Maps;
++
+ import gnu.trove.map.TIntObjectMap;
+ import gnu.trove.map.hash.TIntObjectHashMap;
++
+ import java.util.Iterator;
+ import java.util.Map;
++
+ import net.minecraft.network.EnumPacketDirection;
+ import net.minecraft.network.Packet;
+ import net.minecraft.network.handshake.client.C00Handshake;
+@@ -114,6 +117,7 @@
+ import net.minecraft.network.status.client.C01PacketPing;
+ import net.minecraft.network.status.server.S00PacketServerInfo;
+ import net.minecraft.network.status.server.S01PacketPong;
++
+ import org.apache.logging.log4j.LogManager;
+ 
+ public enum EnumConnectionState {
+@@ -279,7 +283,7 @@
+       return (Integer)((BiMap)this.directionMaps.get(var1)).inverse().get(var2.getClass());
+    }
+ 
+-   public Packet getPacket(EnumPacketDirection var1, int var2) {
++   public Packet getPacket(EnumPacketDirection var1, int var2) throws InstantiationException, IllegalAccessException {
+       Class var3 = (Class)((BiMap)this.directionMaps.get(var1)).get(Integer.valueOf(var2));
+       return var3 == null?null:(Packet)var3.newInstance();
+    }

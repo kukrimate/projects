@@ -1,0 +1,42 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\NBTTagList.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\NBTTagList.java	2014-11-28 14:55:04.815311100 +0100
+@@ -1,10 +1,13 @@
+ package net.minecraft.nbt;
+ 
+ import com.google.common.collect.Lists;
++
+ import java.io.DataInput;
+ import java.io.DataOutput;
++import java.io.IOException;
+ import java.util.Iterator;
+ import java.util.List;
++
+ import net.minecraft.nbt.NBTBase;
+ import net.minecraft.nbt.NBTSizeTracker;
+ import net.minecraft.nbt.NBTTagCompound;
+@@ -12,6 +15,7 @@
+ import net.minecraft.nbt.NBTTagEnd;
+ import net.minecraft.nbt.NBTTagFloat;
+ import net.minecraft.nbt.NBTTagIntArray;
++
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+@@ -22,7 +26,7 @@
+    private byte tagType = 0;
+ 
+ 
+-   void write(DataOutput var1) {
++   void write(DataOutput var1) throws IOException {
+       if(!this.tagList.isEmpty()) {
+          this.tagType = ((NBTBase)this.tagList.get(0)).getId();
+       } else {
+@@ -38,7 +42,7 @@
+ 
+    }
+ 
+-   void read(DataInput var1, int var2, NBTSizeTracker var3) {
++   void read(DataInput var1, int var2, NBTSizeTracker var3) throws IOException {
+       if(var2 > 512) {
+          throw new RuntimeException("Tried to read NBT tag with too high complexity, depth > 512");
+       } else {

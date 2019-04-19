@@ -1,0 +1,11 @@
+language: java
+notifications:
+  email: false
+install: true
+matrix:
+  include:
+  - jdk: oraclejdk7
+    before_install: sudo apt-get install p7zip-full dos2unix
+    install: java -jar building.jar
+    before_script: cd CraftStone
+    script: gradle build

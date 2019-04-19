@@ -1,0 +1,63 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\NBTTagCompound.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\NBTTagCompound.java	2014-11-28 14:55:04.805311100 +0100
+@@ -32,7 +32,7 @@
+    private Map tagMap = Maps.newHashMap();
+ 
+ 
+-   void write(DataOutput var1) {
++   void write(DataOutput var1) throws IOException {
+       Iterator var2 = this.tagMap.keySet().iterator();
+ 
+       while(var2.hasNext()) {
+@@ -44,7 +44,7 @@
+       var1.writeByte(0);
+    }
+ 
+-   void read(DataInput var1, int var2, NBTSizeTracker var3) {
++   void read(DataInput var1, int var2, NBTSizeTracker var3) throws IOException {
+       if(var2 > 512) {
+          throw new RuntimeException("Tried to read NBT tag with too high complexity, depth > 512");
+       } else {
+@@ -264,19 +264,11 @@
+          public String call() {
+             return NBTBase.NBT_TYPES[((NBTBase)NBTTagCompound.this.tagMap.get(var1)).getId()];
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var5.addCrashSectionCallable("Tag type expected", new Callable() {
+          public String call() {
+             return NBTBase.NBT_TYPES[var2];
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var5.addCrashSection("Tag name", var1);
+       return var4;
+@@ -307,7 +299,7 @@
+       return super.hashCode() ^ this.tagMap.hashCode();
+    }
+ 
+-   private static void writeEntry(String var0, NBTBase var1, DataOutput var2) {
++   private static void writeEntry(String var0, NBTBase var1, DataOutput var2) throws IOException {
+       var2.writeByte(var1.getId());
+       if(var1.getId() != 0) {
+          var2.writeUTF(var0);
+@@ -315,11 +307,11 @@
+       }
+    }
+ 
+-   private static byte readType(DataInput var0, NBTSizeTracker var1) {
++   private static byte readType(DataInput var0, NBTSizeTracker var1) throws IOException {
+       return var0.readByte();
+    }
+ 
+-   private static String readKey(DataInput var0, NBTSizeTracker var1) {
++   private static String readKey(DataInput var0, NBTSizeTracker var1) throws IOException {
+       return var0.readUTF();
+    }
+ 

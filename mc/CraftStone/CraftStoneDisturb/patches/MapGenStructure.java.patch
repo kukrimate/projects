@@ -1,0 +1,32 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\gen\structure\MapGenStructure.java	2014-11-28 15:11:12.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\gen\structure\MapGenStructure.java	2014-11-28 14:55:04.919313700 +0100
+@@ -49,29 +49,17 @@
+                public String call() {
+                   return MapGenStructure.this.canSpawnStructureAtCoords(var2, var3)?"True":"False";
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             var9.addCrashSection("Chunk location", String.format("%d,%d", new Object[]{Integer.valueOf(var2), Integer.valueOf(var3)}));
+             var9.addCrashSectionCallable("Chunk pos hash", new Callable() {
+                public String call() {
+                   return String.valueOf(ChunkCoordIntPair.chunkXZ2Int(var2, var3));
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             var9.addCrashSectionCallable("Structure type", new Callable() {
+                public String call() {
+                   return MapGenStructure.this.getClass().getCanonicalName();
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             throw new ReportedException(var8);
+          }

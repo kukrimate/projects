@@ -1,0 +1,32 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\block\state\BlockState.java	2014-11-28 15:10:36.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\block\state\BlockState.java	2014-11-28 18:02:02.877280100 +0100
+@@ -1,5 +1,6 @@
+ package net.minecraft.block.state;
+ 
++import com.craftstone.stone.math.VectorDouble;
+ import com.google.common.base.Function;
+ import com.google.common.base.Joiner;
+ import com.google.common.base.Objects;
+@@ -10,6 +11,7 @@
+ import com.google.common.collect.Iterables;
+ import com.google.common.collect.Lists;
+ import com.google.common.collect.Maps;
++
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collection;
+@@ -20,6 +22,7 @@
+ import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
++
+ import net.minecraft.block.Block;
+ import net.minecraft.block.properties.IProperty;
+ import net.minecraft.block.state.BlockStateBase;
+@@ -193,5 +196,5 @@
+       StateImplemenation(Block var1, ImmutableMap var2, Object var3) {
+          this(var1, var2);
+       }
+-   }
++  	}
+ }

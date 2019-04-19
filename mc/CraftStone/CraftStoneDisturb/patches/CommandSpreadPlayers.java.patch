@@ -1,0 +1,43 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandSpreadPlayers.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandSpreadPlayers.java	2014-12-02 18:25:54.941405800 +0100
+@@ -34,20 +34,16 @@
+       return "spreadplayers";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.spreadplayers.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 6) {
+          throw new WrongUsageException("commands.spreadplayers.usage", new Object[0]);
+       } else {
+          byte var3 = 0;
+-         BlockPos var4 = var1.getPosition();
++         BlockPos var4 = var1.getVanillaPosition();
+          double var10000 = (double)var4.getX();
+          int var17 = var3 + 1;
+          double var5 = func_175761_b(var10000, var2[var3], true);
+@@ -86,7 +82,7 @@
+       }
+    }
+ 
+-   private void func_110669_a(ICommandSender var1, List var2, CommandSpreadPlayers.Position var3, double var4, double var6, World var8, boolean var9) {
++   private void func_110669_a(ICommandSender var1, List var2, CommandSpreadPlayers.Position var3, double var4, double var6, World var8, boolean var9) throws CommandException {
+       Random var10 = new Random();
+       double var11 = var3.field_111101_a - var6;
+       double var13 = var3.field_111100_b - var6;
+@@ -118,7 +114,7 @@
+       return var2.size();
+    }
+ 
+-   private int func_110668_a(CommandSpreadPlayers.Position var1, double var2, World var4, Random var5, double var6, double var8, double var10, double var12, CommandSpreadPlayers.Position[] var14, boolean var15) {
++   private int func_110668_a(CommandSpreadPlayers.Position var1, double var2, World var4, Random var5, double var6, double var8, double var10, double var12, CommandSpreadPlayers.Position[] var14, boolean var15) throws CommandException {
+       boolean var16 = true;
+       double var18 = 3.4028234663852886E38D;
+ 

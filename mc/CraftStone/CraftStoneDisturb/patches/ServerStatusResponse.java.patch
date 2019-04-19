@@ -1,0 +1,116 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\ServerStatusResponse.java	2014-11-28 15:10:58.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\ServerStatusResponse.java	2014-11-28 14:55:04.865311100 +0100
+@@ -79,22 +79,13 @@
+             return new ServerStatusResponse.MinecraftProtocolVersionIdentifier(JsonUtils.getJsonObjectStringFieldValue(var4, "name"), JsonUtils.getJsonObjectIntegerFieldValue(var4, "protocol"));
+          }
+ 
+-         public JsonElement serialize(ServerStatusResponse.MinecraftProtocolVersionIdentifier var1, Type var2, JsonSerializationContext var3) {
++         public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+             JsonObject var4 = new JsonObject();
+-            var4.addProperty("name", var1.getName());
+-            var4.addProperty("protocol", Integer.valueOf(var1.getProtocol()));
++            var4.addProperty("name", ((ServerStatusResponse.MinecraftProtocolVersionIdentifier)var1).getName());
++            var4.addProperty("protocol", Integer.valueOf(((ServerStatusResponse.MinecraftProtocolVersionIdentifier)var1).getProtocol()));
+             return var4;
+          }
+ 
+-         // $FF: synthetic method
+-         public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+-            return this.serialize((ServerStatusResponse.MinecraftProtocolVersionIdentifier)var1, var2, var3);
+-         }
+-
+-         // $FF: synthetic method
+-         public Object deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) {
+-            return this.deserialize(var1, var2, var3);
+-         }
+       }
+    }
+ 
+@@ -149,18 +140,18 @@
+             return var5;
+          }
+ 
+-         public JsonElement serialize(ServerStatusResponse.PlayerCountData var1, Type var2, JsonSerializationContext var3) {
++         public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+             JsonObject var4 = new JsonObject();
+-            var4.addProperty("max", Integer.valueOf(var1.getMaxPlayers()));
+-            var4.addProperty("online", Integer.valueOf(var1.getOnlinePlayerCount()));
+-            if(var1.getPlayers() != null && var1.getPlayers().length > 0) {
++            var4.addProperty("max", Integer.valueOf(((ServerStatusResponse.PlayerCountData)var1).getMaxPlayers()));
++            var4.addProperty("online", Integer.valueOf(((ServerStatusResponse.PlayerCountData)var1).getOnlinePlayerCount()));
++            if(((ServerStatusResponse.PlayerCountData)var1).getPlayers() != null && ((ServerStatusResponse.PlayerCountData)var1).getPlayers().length > 0) {
+                JsonArray var5 = new JsonArray();
+ 
+-               for(int var6 = 0; var6 < var1.getPlayers().length; ++var6) {
++               for(int var6 = 0; var6 < ((ServerStatusResponse.PlayerCountData)var1).getPlayers().length; ++var6) {
+                   JsonObject var7 = new JsonObject();
+-                  UUID var8 = var1.getPlayers()[var6].getId();
++                  UUID var8 = ((ServerStatusResponse.PlayerCountData)var1).getPlayers()[var6].getId();
+                   var7.addProperty("id", var8 == null?"":var8.toString());
+-                  var7.addProperty("name", var1.getPlayers()[var6].getName());
++                  var7.addProperty("name", ((ServerStatusResponse.PlayerCountData)var1).getPlayers()[var6].getName());
+                   var5.add(var7);
+                }
+ 
+@@ -169,16 +160,6 @@
+ 
+             return var4;
+          }
+-
+-         // $FF: synthetic method
+-         public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+-            return this.serialize((ServerStatusResponse.PlayerCountData)var1, var2, var3);
+-         }
+-
+-         // $FF: synthetic method
+-         public Object deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) {
+-            return this.deserialize(var1, var2, var3);
+-         }
+       }
+    }
+ 
+@@ -206,35 +187,25 @@
+          return var5;
+       }
+ 
+-      public JsonElement serialize(ServerStatusResponse var1, Type var2, JsonSerializationContext var3) {
++      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+          JsonObject var4 = new JsonObject();
+-         if(var1.getServerDescription() != null) {
+-            var4.add("description", var3.serialize(var1.getServerDescription()));
++         if(((ServerStatusResponse)var1).getServerDescription() != null) {
++            var4.add("description", var3.serialize(((ServerStatusResponse)var1).getServerDescription()));
+          }
+ 
+-         if(var1.getPlayerCountData() != null) {
+-            var4.add("players", var3.serialize(var1.getPlayerCountData()));
++         if(((ServerStatusResponse)var1).getPlayerCountData() != null) {
++            var4.add("players", var3.serialize(((ServerStatusResponse)var1).getPlayerCountData()));
+          }
+ 
+-         if(var1.getProtocolVersionInfo() != null) {
+-            var4.add("version", var3.serialize(var1.getProtocolVersionInfo()));
++         if(((ServerStatusResponse)var1).getProtocolVersionInfo() != null) {
++            var4.add("version", var3.serialize(((ServerStatusResponse)var1).getProtocolVersionInfo()));
+          }
+ 
+-         if(var1.getFavicon() != null) {
+-            var4.addProperty("favicon", var1.getFavicon());
++         if(((ServerStatusResponse)var1).getFavicon() != null) {
++            var4.addProperty("favicon", ((ServerStatusResponse)var1).getFavicon());
+          }
+ 
+          return var4;
+       }
+-
+-      // $FF: synthetic method
+-      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+-         return this.serialize((ServerStatusResponse)var1, var2, var3);
+-      }
+-
+-      // $FF: synthetic method
+-      public Object deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) {
+-         return this.deserialize(var1, var2, var3);
+-      }
+    }
+ }

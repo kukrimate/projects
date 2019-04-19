@@ -1,0 +1,66 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandExecuteAt.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandExecuteAt.java	2014-12-02 18:16:19.509511000 +0100
+@@ -1,6 +1,7 @@
+ package net.minecraft.command;
+ 
+ import java.util.List;
++
+ import net.minecraft.block.Block;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.command.CommandBase;
+@@ -17,20 +18,15 @@
+ import net.minecraft.world.World;
+ 
+ public class CommandExecuteAt extends CommandBase {
+-
+-   public String getCommandName() {
+-      return "execute";
+-   }
+-
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
++	public String getCommandName() {
++	      return "execute";
++	   }
+ 
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.execute.usage";
+    }
+ 
+-   public void processCommand(final ICommandSender var1, String[] var2) {
++   public void processCommand(final ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 5) {
+          throw new WrongUsageException("commands.execute.usage", new Object[0]);
+       } else {
+@@ -67,10 +63,10 @@
+             public void addChatMessage(IChatComponent var1x) {
+                var1.addChatMessage(var1x);
+             }
+-            public boolean canCommandSenderUseCommand(int var1x, String var2) {
+-               return var1.canCommandSenderUseCommand(var1x, var2);
++            public boolean canCommandSenderUseCommand(String permission) {
++               return var1.canCommandSenderUseCommand(permission);
+             }
+-            public BlockPos getPosition() {
++            public BlockPos getVanillaPosition() {
+                return var10;
+             }
+             public Vec3 getPositionVector() {
+@@ -84,11 +80,15 @@
+             }
+             public boolean sendCommandFeedback() {
+                MinecraftServer var1x = MinecraftServer.getServer();
+-               return var1x == null || var1x.worldServers[0].getGameRules().getGameRuleBooleanValue("commandBlockOutput");
++               return var1x == null || var1x.worldServers.get(0).getGameRules().getGameRuleBooleanValue("commandBlockOutput"); //TEMP
+             }
+             public void func_174794_a(CommandResultStats.Type var1x, int var2) {
+                var3.func_174794_a(var1x, var2);
+             }
++			@Override
++			public void sendMessage(String message) {
++				//CraftStone dummy method
++			}
+          };
+          ICommandManager var25 = MinecraftServer.getServer().getCommandManager();
+ 

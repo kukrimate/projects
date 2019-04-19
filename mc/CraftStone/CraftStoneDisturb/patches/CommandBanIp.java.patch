@@ -1,0 +1,22 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandBanIp.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandBanIp.java	2014-12-02 18:26:35.758558500 +0100
+@@ -24,10 +24,6 @@
+       return "ban-ip";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 3;
+-   }
+-
+    public boolean canCommandSenderUseCommand(ICommandSender var1) {
+       return MinecraftServer.getServer().getConfigurationManager().getBannedIPs().isLanServer() && super.canCommandSenderUseCommand(var1);
+    }
+@@ -36,7 +32,7 @@
+       return "commands.banip.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws PlayerNotFoundException, WrongUsageException {
+       if(var2.length >= 1 && var2[0].length() > 1) {
+          IChatComponent var3 = var2.length >= 2?getChatComponentFromNthArg(var1, var2, 1):null;
+          Matcher var4 = field_147211_a.matcher(var2[0]);

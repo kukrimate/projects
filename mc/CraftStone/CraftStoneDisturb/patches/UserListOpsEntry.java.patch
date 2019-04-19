@@ -1,0 +1,42 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\management\UserListOpsEntry.java	2014-11-28 15:11:00.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\management\UserListOpsEntry.java	2014-12-02 18:29:31.053137000 +0100
+@@ -5,31 +5,31 @@
+ import java.util.UUID;
+ import net.minecraft.server.management.UserListEntry;
+ 
+-public class UserListOpsEntry extends UserListEntry {
++public class UserListOpsEntry extends UserListEntry { //CraftStone
+ 
+-   private final int field_152645_a;
++   //private final int field_152645_a;
+ 
+ 
+-   public UserListOpsEntry(GameProfile var1, int var2) {
++   public UserListOpsEntry(GameProfile var1/*, int var2*/) {
+       super(var1);
+-      this.field_152645_a = var2;
++      //this.field_152645_a = var2;
+    }
+ 
+    public UserListOpsEntry(JsonObject var1) {
+       super(func_152643_b(var1), var1);
+-      this.field_152645_a = var1.has("level")?var1.get("level").getAsInt():0;
++      //this.field_152645_a = var1.has("level")?var1.get("level").getAsInt():0;
+    }
+ 
+-   public int func_152644_a() {
++   /*public int func_152644_a() {
+       return this.field_152645_a;
+-   }
++   }*/
+ 
+    protected void onSerialization(JsonObject var1) {
+       if(this.getValue() != null) {
+          var1.addProperty("uuid", ((GameProfile)this.getValue()).getId() == null?"":((GameProfile)this.getValue()).getId().toString());
+          var1.addProperty("name", ((GameProfile)this.getValue()).getName());
+          super.onSerialization(var1);
+-         var1.addProperty("level", Integer.valueOf(this.field_152645_a));
++         //var1.addProperty("level", Integer.valueOf(this.field_152645_a));
+       }
+    }
+ 

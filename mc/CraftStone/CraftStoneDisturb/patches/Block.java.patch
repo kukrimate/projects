@@ -1,0 +1,31 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\block\Block.java	2014-11-28 15:10:26.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\block\Block.java	2014-11-28 18:04:15.718901100 +0100
+@@ -3,6 +3,9 @@
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Random;
++
++import com.craftstone.stone.math.VectorDouble;
++
+ import net.minecraft.block.BlockAir;
+ import net.minecraft.block.BlockAnvil;
+ import net.minecraft.block.BlockBanner;
+@@ -237,6 +240,12 @@
+    private String unlocalizedName;
+ 
+ 
++   //CraftStone start
++   public String getID() {
++	   return String.valueOf(getIdFromBlock(this));
++   }
++   //CraftStone end
++   
+    public static int getIdFromBlock(Block var0) {
+       return blockRegistry.getIDForObject(var0);
+    }
+@@ -1116,4 +1125,5 @@
+          return this.getBreakSound();
+       }
+    }
++
+ }

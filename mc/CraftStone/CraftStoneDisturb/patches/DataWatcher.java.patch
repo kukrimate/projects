@@ -1,0 +1,35 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\DataWatcher.java	2014-11-28 15:10:42.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\DataWatcher.java	2014-11-28 14:55:04.775311000 +0100
+@@ -2,12 +2,15 @@
+ 
+ import com.google.common.collect.Lists;
+ import com.google.common.collect.Maps;
++
++import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.locks.ReadWriteLock;
+ import java.util.concurrent.locks.ReentrantReadWriteLock;
++
+ import net.minecraft.crash.CrashReport;
+ import net.minecraft.crash.CrashReportCategory;
+ import net.minecraft.entity.Entity;
+@@ -16,6 +19,7 @@
+ import net.minecraft.util.BlockPos;
+ import net.minecraft.util.ReportedException;
+ import net.minecraft.util.Rotations;
++
+ import org.apache.commons.lang3.ObjectUtils;
+ 
+ public class DataWatcher {
+@@ -227,7 +231,7 @@
+ 
+    }
+ 
+-   public static List readWatchedListFromPacketBuffer(PacketBuffer var0) {
++   public static List readWatchedListFromPacketBuffer(PacketBuffer var0) throws IOException {
+       ArrayList var1 = null;
+ 
+       for(byte var2 = var0.readByte(); var2 != 127; var2 = var0.readByte()) {

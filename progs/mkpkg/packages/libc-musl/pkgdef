@@ -1,0 +1,27 @@
+pkg_name="libc-musl"
+pkg_ver="1.1.19"
+pkg_src="https://www.musl-libc.org/releases/musl-$pkg_ver.tar.gz"
+
+build()
+{
+	cd "$UNPACK_DIR/musl-$pkg_ver"
+	./configure --host=$GNU_TRIPLET --prefix=/usr
+	make
+}
+
+package_sysroot()
+{
+	cd "$UNPACK_DIR/musl-$pkg_ver"
+	make DESTDIR=$ARCHIVE_DIR install-headers install-libs
+}
+
+package_target()
+{
+	cd "$UNPACK_DIR/musl-$pkg_ver"
+	make DESTDIR=$ARCHIVE_DIR install-libs
+	find $ARCHIVE_DIR -name *.a -delete -or -name *.o -delete
+
+	# Create ldd symlink
+	mkdir -p $ARCHIVE_DIR/usr/bin
+	ln -s /lib/ld-musl-x86_64.so.1 $ARCHIVE_DIR/usr/bin/ldd
+}

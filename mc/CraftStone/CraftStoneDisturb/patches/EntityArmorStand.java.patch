@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\item\EntityArmorStand.java	2014-11-28 15:10:44.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\item\EntityArmorStand.java	2014-11-30 18:48:51.271423100 +0100
+@@ -90,7 +90,7 @@
+       this.contents[var1] = var2;
+    }
+ 
+-   public ItemStack[] getInventory() {
++   public ItemStack[] getVanillaInventory() {
+       return this.contents;
+    }
+ 

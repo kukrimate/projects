@@ -1,0 +1,13 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandListPlayers.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandListPlayers.java	2014-12-02 18:26:59.121640500 +0100
+@@ -13,10 +13,6 @@
+       return "list";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 0;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.players.usage";
+    }

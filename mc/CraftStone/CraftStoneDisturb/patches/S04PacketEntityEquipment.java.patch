@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S04PacketEntityEquipment.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S04PacketEntityEquipment.java	2014-11-28 14:55:04.845311100 +0100
+@@ -1,5 +1,7 @@
+ package net.minecraft.network.play.server;
+ 
++import java.io.IOException;
++
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -21,7 +23,7 @@
+       this.field_149393_c = var3 == null?null:var3.copy();
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_149394_a = var1.readVarIntFromBuffer();
+       this.field_149392_b = var1.readShort();
+       this.field_149393_c = var1.readItemStackFromBuffer();

@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\BlockPos.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\BlockPos.java	2014-11-28 14:55:04.887311800 +0100
+@@ -182,7 +182,7 @@
+ 
+                protected BlockPos.MutableBlockPos computeNext0() {
+                   if(this.theBlockPos == null) {
+-                     this.theBlockPos = new BlockPos.MutableBlockPos(var2xxx.getX(), var2.getY(), var2x.getZ(), null);
++                     this.theBlockPos = new BlockPos.MutableBlockPos(var2.getX(), var2.getY(), var2.getZ(), null);
+                      return this.theBlockPos;
+                   } else if(this.theBlockPos.equals(var3)) {
+                      return (BlockPos.MutableBlockPos)this.endOfData();

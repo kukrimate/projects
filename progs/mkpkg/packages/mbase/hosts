@@ -1,0 +1,7 @@
+# Static table lookup for hostnames.
+
+# localhost hostname
+127.0.0.1	localhost	localhost.local
+::1		localhost	localhost.local
+
+# Add your own hostname here

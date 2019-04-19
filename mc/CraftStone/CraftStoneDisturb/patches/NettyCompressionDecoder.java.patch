@@ -1,0 +1,23 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\NettyCompressionDecoder.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\NettyCompressionDecoder.java	2014-11-28 14:55:04.825311100 +0100
+@@ -5,8 +5,11 @@
+ import io.netty.channel.ChannelHandlerContext;
+ import io.netty.handler.codec.ByteToMessageDecoder;
+ import io.netty.handler.codec.DecoderException;
++
+ import java.util.List;
++import java.util.zip.DataFormatException;
+ import java.util.zip.Inflater;
++
+ import net.minecraft.network.PacketBuffer;
+ 
+ public class NettyCompressionDecoder extends ByteToMessageDecoder {
+@@ -20,7 +23,7 @@
+       this.inflater = new Inflater();
+    }
+ 
+-   protected void decode(ChannelHandlerContext var1, ByteBuf var2, List var3) {
++   protected void decode(ChannelHandlerContext var1, ByteBuf var2, List var3) throws DataFormatException {
+       if(var2.readableBytes() != 0) {
+          PacketBuffer var4 = new PacketBuffer(var2);
+          int var5 = var4.readVarIntFromBuffer();

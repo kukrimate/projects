@@ -1,0 +1,44 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\IChatComponent.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\IChatComponent.java	2014-11-28 14:55:04.899312500 +0100
+@@ -142,18 +142,18 @@
+ 
+       }
+ 
+-      public JsonElement serialize(IChatComponent var1, Type var2, JsonSerializationContext var3) {
+-         if(var1 instanceof ChatComponentText && var1.getChatStyle().isEmpty() && var1.getSiblings().isEmpty()) {
++      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
++         if(((IChatComponent)var1) instanceof ChatComponentText && ((IChatComponent)var1).getChatStyle().isEmpty() && ((IChatComponent)var1).getSiblings().isEmpty()) {
+             return new JsonPrimitive(((ChatComponentText)var1).getChatComponentText_TextValue());
+          } else {
+             JsonObject var4 = new JsonObject();
+-            if(!var1.getChatStyle().isEmpty()) {
+-               this.serializeChatStyle(var1.getChatStyle(), var4, var3);
++            if(!((IChatComponent)var1).getChatStyle().isEmpty()) {
++               this.serializeChatStyle(((IChatComponent)var1).getChatStyle(), var4, var3);
+             }
+ 
+-            if(!var1.getSiblings().isEmpty()) {
++            if(!((IChatComponent)var1).getSiblings().isEmpty()) {
+                JsonArray var5 = new JsonArray();
+-               Iterator var6 = var1.getSiblings().iterator();
++               Iterator var6 = ((IChatComponent)var1).getSiblings().iterator();
+ 
+                while(var6.hasNext()) {
+                   IChatComponent var7 = (IChatComponent)var6.next();
+@@ -212,16 +212,6 @@
+          return (IChatComponent)GSON.fromJson(var0, IChatComponent.class);
+       }
+ 
+-      // $FF: synthetic method
+-      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+-         return this.serialize((IChatComponent)var1, var2, var3);
+-      }
+-
+-      // $FF: synthetic method
+-      public Object deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) {
+-         return this.deserialize(var1, var2, var3);
+-      }
+-
+       static {
+          GsonBuilder var0 = new GsonBuilder();
+          var0.registerTypeHierarchyAdapter(IChatComponent.class, new IChatComponent.Serializer());

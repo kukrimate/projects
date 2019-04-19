@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import argparse
+
+line_length = 8
+
+parser = argparse.ArgumentParser(description='Convert a binary file to a C array')
+parser.add_argument('input_file', help='Input binary')
+parser.add_argument('--array-name', '-a', default='bindata', help='Name of the array')
+args = parser.parse_args()
+
+with open(args.input_file, 'rb') as binfile:
+	bindata = binfile.read()
+
+print('static uint8_t ' + args.array_name + '[] = { ', end='')
+for i, b in enumerate(bindata):
+	if i % line_length == 0:
+		print('', end='\n\t')
+	print("0x{:02x}".format(b) + ', ', end='')
+print('\n};')
+print('#define ' + args.array_name.upper() + '_LEN ' + str(len(bindata)));

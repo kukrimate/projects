@@ -1,0 +1,28 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandGameMode.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandGameMode.java	2014-12-02 18:25:08.577280900 +0100
+@@ -16,15 +16,11 @@
+       return "gamemode";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.gamemode.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, PlayerNotFoundException, NumberInvalidException {
+       if(var2.length <= 0) {
+          throw new WrongUsageException("commands.gamemode.usage", new Object[0]);
+       } else {
+@@ -46,7 +42,7 @@
+       }
+    }
+ 
+-   protected WorldSettings.GameType getGameModeFromCommand(ICommandSender var1, String var2) {
++   protected WorldSettings.GameType getGameModeFromCommand(ICommandSender var1, String var2) throws NumberInvalidException {
+       return !var2.equalsIgnoreCase(WorldSettings.GameType.SURVIVAL.getName()) && !var2.equalsIgnoreCase("s")?(!var2.equalsIgnoreCase(WorldSettings.GameType.CREATIVE.getName()) && !var2.equalsIgnoreCase("c")?(!var2.equalsIgnoreCase(WorldSettings.GameType.ADVENTURE.getName()) && !var2.equalsIgnoreCase("a")?(!var2.equalsIgnoreCase(WorldSettings.GameType.SPECTATOR.getName()) && !var2.equalsIgnoreCase("sp")?WorldSettings.getGameTypeById(parseInt(var2, 0, WorldSettings.GameType.values().length - 2)):WorldSettings.GameType.SPECTATOR):WorldSettings.GameType.ADVENTURE):WorldSettings.GameType.CREATIVE):WorldSettings.GameType.SURVIVAL;
+    }
+ 

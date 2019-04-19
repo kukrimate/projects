@@ -1,0 +1,20 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S30PacketWindowItems.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S30PacketWindowItems.java	2014-11-28 14:55:04.855311100 +0100
+@@ -1,6 +1,8 @@
+ package net.minecraft.network.play.server;
+ 
++import java.io.IOException;
+ import java.util.List;
++
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -26,7 +28,7 @@
+ 
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_148914_a = var1.readUnsignedByte();
+       short var2 = var1.readShort();
+       this.field_148913_b = new ItemStack[var2];

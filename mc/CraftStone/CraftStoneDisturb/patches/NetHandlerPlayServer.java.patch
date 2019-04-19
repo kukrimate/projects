@@ -1,0 +1,78 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\NetHandlerPlayServer.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\NetHandlerPlayServer.java	2014-12-02 18:35:28.977083000 +0100
+@@ -500,13 +500,10 @@
+       PacketThreadUtil.func_180031_a(var1, this, this.playerEntity.getServerForPlayer());
+       if(this.playerEntity.func_175149_v()) {
+          Entity var2 = null;
+-         WorldServer[] var3 = this.serverController.worldServers;
+-         int var4 = var3.length;
+ 
+-         for(int var5 = 0; var5 < var4; ++var5) {
+-            WorldServer var6 = var3[var5];
+-            if(var6 != null) {
+-               var2 = var1.func_179727_a(var6);
++         for(WorldServer world : this.serverController.worldServers) {
++            if(world != null) {
++               var2 = var1.func_179727_a(world);
+                if(var2 != null) {
+                   break;
+                }
+@@ -919,16 +916,16 @@
+ 
+          try {
+             var3 = var2.readItemStackFromBuffer();
+-            if(var3 == null) {
+-               return;
+-            }
++            if(var3 != null) {
++               if(!ItemWritableBook.validBookPageTagContents(var3.getTagCompound())) {
++                  throw new IOException("Invalid book tag!");
++               }
+ 
+-            if(!ItemWritableBook.validBookPageTagContents(var3.getTagCompound())) {
+-               throw new IOException("Invalid book tag!");
+-            }
++               var4 = this.playerEntity.inventory.getCurrentItem();
++               if(var4 == null) {
++                  return;
++               }
+ 
+-            var4 = this.playerEntity.inventory.getCurrentItem();
+-            if(var4 != null) {
+                if(var3.getItem() == Items.writable_book && var3.getItem() == var4.getItem()) {
+                   var4.setTagInfo("pages", var3.getTagCompound().getTagList("pages", 8));
+                }
+@@ -948,16 +945,16 @@
+ 
+          try {
+             var3 = var2.readItemStackFromBuffer();
+-            if(var3 == null) {
+-               return;
+-            }
++            if(var3 != null) {
++               if(!ItemEditableBook.validBookTagContents(var3.getTagCompound())) {
++                  throw new IOException("Invalid book tag!");
++               }
+ 
+-            if(!ItemEditableBook.validBookTagContents(var3.getTagCompound())) {
+-               throw new IOException("Invalid book tag!");
+-            }
++               var4 = this.playerEntity.inventory.getCurrentItem();
++               if(var4 == null) {
++                  return;
++               }
+ 
+-            var4 = this.playerEntity.inventory.getCurrentItem();
+-            if(var4 != null) {
+                if(var3.getItem() == Items.written_book && var4.getItem() == Items.writable_book) {
+                   var4.setTagInfo("author", new NBTTagString(this.playerEntity.getName()));
+                   var4.setTagInfo("title", new NBTTagString(var3.getTagCompound().getString("title")));
+@@ -988,7 +985,7 @@
+       } else if("MC|AdvCdm".equals(var1.getChannelName())) {
+          if(!this.serverController.isCommandBlockEnabled()) {
+             this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.notEnabled", new Object[0]));
+-         } else if(this.playerEntity.canCommandSenderUseCommand(2, "") && this.playerEntity.capabilities.isCreativeMode) {
++         } else if(/*this.playerEntity.canCommandSenderUseCommand(2, "") &&*/ this.playerEntity.capabilities.isCreativeMode) { //CraftStone
+             var2 = var1.getBufferData();
+ 
+             try {

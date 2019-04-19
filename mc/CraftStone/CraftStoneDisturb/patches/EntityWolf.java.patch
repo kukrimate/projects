@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\passive\EntityWolf.java	2014-11-28 15:10:48.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\passive\EntityWolf.java	2014-11-28 14:55:04.785311000 +0100
+@@ -412,9 +412,4 @@
+    public boolean allowLeashing() {
+       return !this.isAngry() && super.allowLeashing();
+    }
+-
+-   // $FF: synthetic method
+-   public EntityAgeable createChild(EntityAgeable var1) {
+-      return this.createChild(var1);
+-   }
+ }

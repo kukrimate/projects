@@ -1,0 +1,30 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\NettyEncryptionTranslator.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\NettyEncryptionTranslator.java	2014-11-28 14:55:04.835311100 +0100
+@@ -2,7 +2,9 @@
+ 
+ import io.netty.buffer.ByteBuf;
+ import io.netty.channel.ChannelHandlerContext;
++
+ import javax.crypto.Cipher;
++import javax.crypto.ShortBufferException;
+ 
+ public class NettyEncryptionTranslator {
+ 
+@@ -25,7 +27,7 @@
+       return this.field_150505_b;
+    }
+ 
+-   protected ByteBuf decipher(ChannelHandlerContext var1, ByteBuf var2) {
++   protected ByteBuf decipher(ChannelHandlerContext var1, ByteBuf var2) throws ShortBufferException {
+       int var3 = var2.readableBytes();
+       byte[] var4 = this.func_150502_a(var2);
+       ByteBuf var5 = var1.alloc().heapBuffer(this.cipher.getOutputSize(var3));
+@@ -33,7 +35,7 @@
+       return var5;
+    }
+ 
+-   protected void cipher(ByteBuf var1, ByteBuf var2) {
++   protected void cipher(ByteBuf var1, ByteBuf var2) throws ShortBufferException {
+       int var3 = var1.readableBytes();
+       byte[] var4 = this.func_150502_a(var1);
+       int var5 = this.cipher.getOutputSize(var3);

@@ -1,0 +1,71 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\crash\CrashReport.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\crash\CrashReport.java	2014-11-28 14:55:04.765311000 +0100
+@@ -43,37 +43,21 @@
+          public String call() {
+             return "1.8";
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("Operating System", new Callable() {
+          public String call() {
+             return System.getProperty("os.name") + " (" + System.getProperty("os.arch") + ") version " + System.getProperty("os.version");
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("Java Version", new Callable() {
+          public String call() {
+             return System.getProperty("java.version") + ", " + System.getProperty("java.vendor");
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("Java VM Version", new Callable() {
+          public String call() {
+             return System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor");
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("Memory", new Callable() {
+          public String call() {
+@@ -86,10 +70,6 @@
+             long var12 = var6 / 1024L / 1024L;
+             return var6 + " bytes (" + var12 + " MB) / " + var4 + " bytes (" + var10 + " MB) up to " + var2 + " bytes (" + var8 + " MB)";
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("JVM Flags", new Callable() {
+          public String call() {
+@@ -112,19 +92,11 @@
+ 
+             return String.format("%d total; %s", new Object[]{Integer.valueOf(var3), var4.toString()});
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       this.theReportCategory.addCrashSectionCallable("IntCache", new Callable() {
+          public String call() {
+             return IntCache.getCacheSizes();
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+    }
+ 

@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandStats.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandStats.java	2014-12-02 18:25:58.203431600 +0100
+@@ -25,15 +25,11 @@
+       return "stats";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.stats.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 1) {
+          throw new WrongUsageException("commands.stats.usage", new Object[0]);
+       } else {

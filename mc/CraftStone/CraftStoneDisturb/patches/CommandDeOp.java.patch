@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandDeOp.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandDeOp.java	2014-12-02 18:26:48.105605800 +0100
+@@ -15,15 +15,11 @@
+       return "deop";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 3;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.deop.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length == 1 && var2[0].length() > 0) {
+          MinecraftServer var3 = MinecraftServer.getServer();
+          GameProfile var4 = var3.getConfigurationManager().getOppedPlayers().getGameProfileFromName(var2[0]);

@@ -1,0 +1,18 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\block\state\BlockWorldState.java	2014-11-28 15:10:36.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\block\state\BlockWorldState.java	2014-11-28 18:05:31.348286600 +0100
+@@ -1,6 +1,8 @@
+ package net.minecraft.block.state;
+ 
++import com.craftstone.stone.math.VectorDouble;
+ import com.google.common.base.Predicate;
++
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.tileentity.TileEntity;
+ import net.minecraft.util.BlockPos;
+@@ -52,4 +54,4 @@
+          }
+       };
+    }
+-}
++}
+\ No newline at end of file

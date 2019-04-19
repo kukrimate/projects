@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "eclipse"
+            url = "https://repo.eclipse.org/content/groups/eclipse/"
+        }
+    }
+}
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'me.mateass.srg2srcgui'
+version = '1.0-SNAPSHOT'
+archivesBaseName = 'Srg2SrcGUI'
+targetCompatibility = '1.6'
+sourceCompatibility = '1.6'
+
+configurations {
+    deployerJars
+}
+
+dependencies {
+    compile 'org.ow2.asm:asm-debug-all:4.1' // Debug version, so we can have generics!
+    compile 'com.google.guava:guava:15.0'
+    compile 'net.sf.opencsv:opencsv:2.3' // reading CSVs.. also used by SpecialSource
+    compile 'net.sf.jopt-simple:jopt-simple:4.6' // easy CLI parsing
+    compile 'org.eclipse.jgit:org.eclipse.jgit:3.2.0.201312181205-r' // git stuff? may not be used yet
+    
+    // necessary eclipse AST stuff
+    compile 'org.eclipse.core:contenttype:3.4.200-v20130326-1255'
+    compile 'org.eclipse.core:jobs:3.5.300-v20130429-1813'
+    compile 'org.eclipse.core:runtime:3.9.0-v20130326-1255'
+    compile 'org.eclipse.core:resources:3.2.1-R32x_v20060914'
+    compile 'org.eclipse:osgi:3.9.1-v20130814-1242'
+    compile 'org.eclipse.text:org.eclipse.text:3.5.101'
+    compile 'org.eclipse.equinox:common:3.6.200-v20130402-1505'
+    compile 'org.eclipse.equinox:preferences:3.5.100-v20130422-1538'
+    
+    compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.10.0.v20131029-1755'
+    
+    // maven deployer jar
+    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+}
+
+repositories {
+    maven {
+        name = "forge"
+        url = "http://files.minecraftforge.net/maven"
+    }
+    maven {
+        name = "eclipse"
+        url = "https://repo.eclipse.org/content/groups/eclipse"
+    }
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'version':project.version, 'javaCompliance': project.targetCompatibility
+        attributes 'group':project.group
+    }
+}
+
+jar {
+    exclude 'data/**'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}

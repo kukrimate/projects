@@ -1,0 +1,25 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\NBTTagDouble.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\NBTTagDouble.java	2014-11-28 14:55:04.805311100 +0100
+@@ -2,6 +2,8 @@
+ 
+ import java.io.DataInput;
+ import java.io.DataOutput;
++import java.io.IOException;
++
+ import net.minecraft.nbt.NBTBase;
+ import net.minecraft.nbt.NBTSizeTracker;
+ import net.minecraft.util.MathHelper;
+@@ -17,11 +19,11 @@
+       this.data = var1;
+    }
+ 
+-   void write(DataOutput var1) {
++   void write(DataOutput var1) throws IOException {
+       var1.writeDouble(this.data);
+    }
+ 
+-   void read(DataInput var1, int var2, NBTSizeTracker var3) {
++   void read(DataInput var1, int var2, NBTSizeTracker var3) throws IOException {
+       var3.read(64L);
+       this.data = var1.readDouble();
+    }

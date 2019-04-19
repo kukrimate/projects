@@ -1,0 +1,23 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\block\state\BlockStateBase.java	2014-11-28 15:10:36.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\block\state\BlockStateBase.java	2014-11-28 18:01:54.115779000 +0100
+@@ -1,11 +1,14 @@
+ package net.minecraft.block.state;
+ 
++import com.craftstone.stone.math.VectorDouble;
+ import com.google.common.base.Function;
+ import com.google.common.base.Joiner;
+ import com.google.common.collect.Iterables;
++
+ import java.util.Collection;
+ import java.util.Iterator;
+ import java.util.Map.Entry;
++
+ import net.minecraft.block.Block;
+ import net.minecraft.block.properties.IProperty;
+ import net.minecraft.block.state.IBlockState;
+@@ -60,5 +63,4 @@
+ 
+       return var1.toString();
+    }
+-
+ }

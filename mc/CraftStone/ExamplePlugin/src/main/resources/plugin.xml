@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
+	<name>TestPlugin</name><version>v1.0</version><main-class>com.craftstone.exampleplugin.ExamplePlugin</main-class>
+	<commands>
+		<strike><name>strike</name><aliases>st;st2;st3</aliases>
+			<description>A command to strike lightning at player location</description>
+			<usage>/strike</usage>
+			<permission>testplugin.strike</permission>
+			<permissionMessage>You have no permission to strike lightning</permissionMessage>
+			</strike></commands></config>

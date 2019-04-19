@@ -1,0 +1,20 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\MessageSerializer.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\MessageSerializer.java	2014-11-28 14:55:04.904312800 +0100
+@@ -26,7 +26,7 @@
+       this.direction = var1;
+    }
+ 
+-   protected void encode(ChannelHandlerContext var1, Packet var2, ByteBuf var3) {
++   protected void encode(ChannelHandlerContext var1, Packet var2, ByteBuf var3) throws IOException {
+       Integer var4 = ((EnumConnectionState)var1.channel().attr(NetworkManager.attrKeyConnectionState).get()).getPacketId(this.direction, var2);
+       if(logger.isDebugEnabled()) {
+          logger.debug(RECEIVED_PACKET_MARKER, "OUT: [{}:{}] {}", new Object[]{var1.channel().attr(NetworkManager.attrKeyConnectionState).get(), var4, var2.getClass().getName()});
+@@ -52,7 +52,7 @@
+    }
+ 
+    // $FF: synthetic method
+-   protected void encode(ChannelHandlerContext var1, Object var2, ByteBuf var3) {
++   protected void encode(ChannelHandlerContext var1, Object var2, ByteBuf var3) throws IOException {
+       this.encode(var1, (Packet)var2, var3);
+    }
+ 

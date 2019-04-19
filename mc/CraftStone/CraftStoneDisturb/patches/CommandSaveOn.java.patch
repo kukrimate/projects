@@ -1,0 +1,30 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandSaveOn.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandSaveOn.java	2014-11-28 16:55:23.727467900 +0100
+@@ -16,20 +16,20 @@
+       return "commands.save-on.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       MinecraftServer var3 = MinecraftServer.getServer();
+       boolean var4 = false;
+ 
+-      for(int var5 = 0; var5 < var3.worldServers.length; ++var5) {
+-         if(var3.worldServers[var5] != null) {
+-            WorldServer var6 = var3.worldServers[var5];
+-            if(var6.disableLevelSaving) {
+-               var6.disableLevelSaving = false;
++
++      for(WorldServer world : var3.worldServers) {
++         if(world != null) {
++            if(!world.disableLevelSaving) {
++            	world.disableLevelSaving = false;
+                var4 = true;
+             }
+          }
+       }
+-
++      
+       if(var4) {
+          notifyOperators(var1, this, "commands.save.enabled", new Object[0]);
+       } else {

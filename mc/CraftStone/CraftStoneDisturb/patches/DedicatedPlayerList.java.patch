@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\dedicated\DedicatedPlayerList.java	2014-11-28 15:10:58.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\dedicated\DedicatedPlayerList.java	2014-11-28 14:55:04.865311100 +0100
+@@ -146,9 +146,5 @@
+       return (DedicatedServer)super.getServerInstance();
+    }
+ 
+-   // $FF: synthetic method
+-   public MinecraftServer getServerInstance() {
+-      return this.getServerInstance();
+-   }
+ 
+ }

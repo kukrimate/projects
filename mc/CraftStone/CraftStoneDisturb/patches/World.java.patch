@@ -1,0 +1,72 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\World.java	2014-11-28 15:11:18.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\World.java	2014-11-30 17:27:47.306190600 +0100
+@@ -65,7 +65,7 @@
+ import net.minecraft.world.storage.MapStorage;
+ import net.minecraft.world.storage.WorldInfo;
+ 
+-public abstract class World implements IBlockAccess {
++public abstract class World implements IBlockAccess, com.craftstone.stone.world.World {
+ 
+    protected boolean scheduledUpdatesAreImmediate;
+    public final List loadedEntityList = Lists.newArrayList();
+@@ -119,6 +119,9 @@
+       this.provider = var3;
+       this.isRemote = var5;
+       this.worldBorder = var3.getWorldBorder();
++      
++      //CraftStone
++      this.worldInfo.setWorld(this);
+    }
+ 
+    public World init() {
+@@ -138,10 +141,6 @@
+                public String call() {
+                   return CrashReportCategory.getCoordinateInfo(var1);
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             throw new ReportedException(var4);
+          }
+@@ -395,10 +394,6 @@
+                      return "ID #" + Block.getIdFromBlock(var2);
+                   }
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             CrashReportCategory.addBlockInfo(var6, var1, var3);
+             throw new ReportedException(var5);
+@@ -2237,7 +2232,7 @@
+       return null;
+    }
+ 
+-   public void checkSessionLock() {
++   public void checkSessionLock() throws MinecraftException {
+       this.saveHandler.checkSessionLock();
+    }
+ 
+@@ -2401,19 +2396,11 @@
+          public String call() {
+             return World.this.playerEntities.size() + " total; " + World.this.playerEntities.toString();
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var2.addCrashSectionCallable("Chunk stats", new Callable() {
+          public String call() {
+             return World.this.chunkProvider.makeString();
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+ 
+       try {

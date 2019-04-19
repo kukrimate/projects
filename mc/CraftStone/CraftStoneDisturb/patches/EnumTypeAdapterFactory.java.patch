@@ -1,0 +1,29 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\EnumTypeAdapterFactory.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\EnumTypeAdapterFactory.java	2014-11-28 14:55:04.897312400 +0100
+@@ -8,6 +8,8 @@
+ import com.google.gson.stream.JsonReader;
+ import com.google.gson.stream.JsonToken;
+ import com.google.gson.stream.JsonWriter;
++
++import java.io.IOException;
+ import java.util.HashMap;
+ import java.util.Locale;
+ 
+@@ -28,7 +30,7 @@
+          }
+ 
+          return new TypeAdapter() {
+-            public void write(JsonWriter var1, Object var2) {
++            public void write(JsonWriter var1, Object var2) throws IOException {
+                if(var2 == null) {
+                   var1.nullValue();
+                } else {
+@@ -36,7 +38,7 @@
+                }
+ 
+             }
+-            public Object read(JsonReader var1) {
++            public Object read(JsonReader var1) throws IOException {
+                if(var1.peek() == JsonToken.NULL) {
+                   var1.nextNull();
+                   return null;

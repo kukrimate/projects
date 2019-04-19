@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\client\C08PacketPlayerBlockPlacement.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\client\C08PacketPlayerBlockPlacement.java	2014-11-28 14:55:04.835311100 +0100
+@@ -1,5 +1,7 @@
+ package net.minecraft.network.play.client;
+ 
++import java.io.IOException;
++
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -33,7 +35,7 @@
+       this.facingZ = var6;
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_179725_b = var1.readBlockPos();
+       this.placedBlockDirection = var1.readUnsignedByte();
+       this.stack = var1.readItemStackFromBuffer();

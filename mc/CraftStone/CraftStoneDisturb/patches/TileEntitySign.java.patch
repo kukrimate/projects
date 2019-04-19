@@ -1,0 +1,60 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\tileentity\TileEntitySign.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\tileentity\TileEntitySign.java	2014-12-02 18:13:48.568061700 +0100
+@@ -1,6 +1,7 @@
+ package net.minecraft.tileentity;
+ 
+ import com.google.gson.JsonParseException;
++
+ import net.minecraft.command.CommandException;
+ import net.minecraft.command.CommandResultStats;
+ import net.minecraft.command.ICommandSender;
+@@ -51,10 +52,11 @@
+             return new ChatComponentText(this.getName());
+          }
+          public void addChatMessage(IChatComponent var1) {}
+-         public boolean canCommandSenderUseCommand(int var1, String var2) {
++         
++         public boolean canCommandSenderUseCommand(String permssion) {
+             return true;
+          }
+-         public BlockPos getPosition() {
++         public BlockPos getVanillaPosition() {
+             return TileEntitySign.this.pos;
+          }
+          public Vec3 getPositionVector() {
+@@ -70,6 +72,10 @@
+             return false;
+          }
+          public void func_174794_a(CommandResultStats.Type var1, int var2) {}
++		@Override
++		public void sendMessage(String message) {
++			//CraftStone dummy method
++		}
+       };
+ 
+       for(int var3 = 0; var3 < 4; ++var3) {
+@@ -118,10 +124,11 @@
+             return var1.getDisplayName();
+          }
+          public void addChatMessage(IChatComponent var1x) {}
+-         public boolean canCommandSenderUseCommand(int var1x, String var2) {
++         
++         public boolean canCommandSenderUseCommand(String permission) {
+             return true;
+          }
+-         public BlockPos getPosition() {
++         public BlockPos getVanillaPosition() {
+             return TileEntitySign.this.pos;
+          }
+          public Vec3 getPositionVector() {
+@@ -139,6 +146,10 @@
+          public void func_174794_a(CommandResultStats.Type var1x, int var2) {
+             TileEntitySign.this.field_174883_i.func_179672_a(this, var1x, var2);
+          }
++ 		@Override
++ 		public void sendMessage(String message) {
++ 			//CraftStone dummy method
++ 		}
+       };
+ 
+       for(int var3 = 0; var3 < this.signText.length; ++var3) {

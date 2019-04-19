@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\ChatComponentText.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\ChatComponentText.java	2014-11-28 14:55:04.890312000 +0100
+@@ -48,9 +48,4 @@
+    public String toString() {
+       return "TextComponent{text=\'" + this.text + '\'' + ", siblings=" + this.siblings + ", style=" + this.getChatStyle() + '}';
+    }
+-
+-   // $FF: synthetic method
+-   public IChatComponent createCopy() {
+-      return this.createCopy();
+-   }
+ }

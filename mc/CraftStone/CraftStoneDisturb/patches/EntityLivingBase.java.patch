@@ -1,0 +1,47 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\EntityLivingBase.java	2014-11-28 15:10:44.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\EntityLivingBase.java	2014-11-30 18:48:51.348427500 +0100
+@@ -352,7 +352,7 @@
+       var1.setInteger("HurtByTimestamp", this.revengeTimer);
+       var1.setShort("DeathTime", (short)this.deathTime);
+       var1.setFloat("AbsorptionAmount", this.getAbsorptionAmount());
+-      ItemStack[] var2 = this.getInventory();
++      ItemStack[] var2 = this.getVanillaInventory();
+       int var3 = var2.length;
+ 
+       int var4;
+@@ -365,7 +365,7 @@
+       }
+ 
+       var1.setTag("Attributes", SharedMonsterAttributes.writeBaseAttributeMapToNBT(this.getAttributeMap()));
+-      var2 = this.getInventory();
++      var2 = this.getVanillaInventory();
+       var3 = var2.length;
+ 
+       for(var4 = 0; var4 < var3; ++var4) {
+@@ -810,7 +810,7 @@
+ 
+    public int getTotalArmorValue() {
+       int var1 = 0;
+-      ItemStack[] var2 = this.getInventory();
++      ItemStack[] var2 = this.getVanillaInventory();
+       int var3 = var2.length;
+ 
+       for(int var4 = 0; var4 < var3; ++var4) {
+@@ -854,7 +854,7 @@
+          if(var2 <= 0.0F) {
+             return 0.0F;
+          } else {
+-            var3 = EnchantmentHelper.getEnchantmentModifierDamage(this.getInventory(), var1);
++            var3 = EnchantmentHelper.getEnchantmentModifierDamage(this.getVanillaInventory(), var1);
+             if(var3 > 20) {
+                var3 = 20;
+             }
+@@ -975,7 +975,7 @@
+ 
+    }
+ 
+-   public abstract ItemStack[] getInventory();
++   public abstract ItemStack[] getVanillaInventory();
+ 
+    protected float getSoundVolume() {
+       return 1.0F;

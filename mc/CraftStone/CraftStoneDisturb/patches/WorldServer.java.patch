@@ -1,0 +1,182 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\WorldServer.java	2014-11-28 15:11:18.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\WorldServer.java	2014-11-30 17:15:53.660192800 +0100
+@@ -1,10 +1,19 @@
+ package net.minecraft.world;
+ 
++import com.craftstone.CraftBlock;
++import com.craftstone.VanillaToModAdapter;
++import com.craftstone.stone.event.weather.LightningEvent;
++import com.craftstone.stone.math.VectorDouble;
++import com.craftstone.stone.scoreboard.Scoreboard;
++import com.craftstone.stone.world.EnumWorldType;
++import com.craftstone.stone.world.Enviroment;
++import com.craftstone.stone.world.biome.Biome;
+ import com.google.common.base.Predicate;
+ import com.google.common.collect.Lists;
+ import com.google.common.collect.Maps;
+ import com.google.common.collect.Sets;
+ import com.google.common.util.concurrent.ListenableFuture;
++
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+@@ -13,6 +22,7 @@
+ import java.util.Set;
+ import java.util.TreeSet;
+ import java.util.UUID;
++
+ import net.minecraft.block.Block;
+ import net.minecraft.block.BlockEventData;
+ import net.minecraft.block.material.Material;
+@@ -77,6 +87,7 @@
+ import net.minecraft.world.storage.ISaveHandler;
+ import net.minecraft.world.storage.MapStorage;
+ import net.minecraft.world.storage.WorldInfo;
++
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+@@ -360,14 +371,14 @@
+       AxisAlignedBB var3 = (new AxisAlignedBB(var2, new BlockPos(var2.getX(), this.getHeight(), var2.getZ()))).expand(3.0D, 3.0D, 3.0D);
+       List var4 = this.func_175647_a(EntityLivingBase.class, var3, new Predicate() {
+          public boolean func_180242_a(EntityLivingBase var1) {
+-            return var1 != null && var1.isEntityAlive() && WorldServer.this.isAgainstSky(var1.getPosition());
++            return var1 != null && var1.isEntityAlive() && WorldServer.this.isAgainstSky(var1.getVanillaPosition());
+          }
+          // $FF: synthetic method
+          public boolean apply(Object var1) {
+             return this.func_180242_a((EntityLivingBase)var1);
+          }
+       });
+-      return !var4.isEmpty()?((EntityLivingBase)var4.get(this.rand.nextInt(var4.size()))).getPosition():var2;
++      return !var4.isEmpty()?((EntityLivingBase)var4.get(this.rand.nextInt(var4.size()))).getVanillaPosition():var2;
+    }
+ 
+    public boolean isBlockTickPending(BlockPos var1, Block var2) {
+@@ -687,7 +698,7 @@
+       return this.provider.func_177496_h();
+    }
+ 
+-   public void saveAllChunks(boolean var1, IProgressUpdate var2) {
++   public void saveAllChunks(boolean var1, IProgressUpdate var2) throws MinecraftException {
+       if(this.chunkProvider.canSave()) {
+          if(var2 != null) {
+             var2.displaySavingString("Saving level");
+@@ -718,7 +729,7 @@
+       }
+    }
+ 
+-   protected void saveLevel() {
++   protected void saveLevel() throws MinecraftException {
+       this.checkSessionLock();
+       this.worldInfo.func_176145_a(this.getWorldBorder().getDiameter());
+       this.worldInfo.func_176124_d(this.getWorldBorder().getCenterX());
+@@ -759,13 +770,18 @@
+ 
+    }
+ 
+-   public boolean addWeatherEffect(Entity var1) {
+-      if(super.addWeatherEffect(var1)) {
+-         this.mcServer.getConfigurationManager().sendToAllNear(var1.posX, var1.posY, var1.posZ, 512.0D, this.provider.getDimensionId(), new S2CPacketSpawnGlobalEntity(var1));
+-         return true;
+-      } else {
+-         return false;
+-      }
++   public boolean addWeatherEffect(Entity var1) { //CraftStone
++	  LightningEvent event = new LightningEvent(this, new VectorDouble(var1.posX, var1.posY, var1.posZ));
++	  mcServer.callEvent(event);
++	  if (!event.wasCanclled()) {
++	      if(super.addWeatherEffect(var1)) {
++	          this.mcServer.getConfigurationManager().sendToAllNear(var1.posX, var1.posY, var1.posZ, 512.0D, this.provider.getDimensionId(), new S2CPacketSpawnGlobalEntity(var1));
++	          return true;
++	       } else {
++	          return false;
++	       }
++	  }
++	  return false;
+    }
+ 
+    public void setEntityState(Entity var1, byte var2) {
+@@ -888,7 +904,7 @@
+ 
+       for(int var20 = 0; var20 < this.playerEntities.size(); ++var20) {
+          EntityPlayerMP var21 = (EntityPlayerMP)this.playerEntities.get(var20);
+-         BlockPos var22 = var21.getPosition();
++         BlockPos var22 = var21.getVanillaPosition();
+          double var23 = var22.distanceSq(var3, var5, var7);
+          if(var23 <= 256.0D || var2 && var23 <= 65536.0D) {
+             var21.playerNetServerHandler.sendPacket(var19);
+@@ -919,4 +935,73 @@
+          this();
+       }
+    }
++
++
++	@Override
++	public String getWorldName() {
++		return this.getWorldInfo().getWorldName();
++	}
++	
++	@Override
++	public Enviroment getEnviroment() {
++		return VanillaToModAdapter.dimToEnv(this.provider.getDimensionId());
++	}
++	
++	@Override
++	public EnumWorldType getType() {
++		return VanillaToModAdapter.worldTypeAdapter(this.getWorldType());
++	}
++	
++	@Override
++	public com.craftstone.stone.block.Block getBlockAt(int x, int y, int z) {
++		return new CraftBlock(this.getBlockState(new BlockPos(x,y,z)).getBlock(), new BlockPos(x,y,z));
++	}
++	
++	@Override
++	public Biome getBiomeAtCoords(int x, int y, int z) {
++		return this.getBiomeGenForCoords(new BlockPos(x,y,z));
++	}
++	
++	@Override
++	public com.craftstone.stone.world.Chunk getChunkAt(int x, int z) {
++		return this.getChunkProvider().provideChunk(x, z);
++	}
++	
++	@Override
++	public Scoreboard getWorldScoreboard() {
++		// TODO Auto-generated method stub
++		return null;
++	}
++	
++	@Override
++	public boolean isMainWorld() {
++		return this == MinecraftServer.getServer().worldServers.get(0) ? true : false;
++	}
++	
++	@Override
++	public void addTime(long timeToAdd) {
++		this.setWorldTime(this.getWorldTime() + timeToAdd);
++	}
++	
++	@Override
++	public List<com.craftstone.stone.world.Chunk> getChunks() {
++		return (List<com.craftstone.stone.world.Chunk>) this.theChunkProviderServer.id2ChunkMap.entries();
++	}
++	
++	@Override
++	public void setRaining(boolean state, double duration) {
++		this.worldInfo.setRaining(state);
++		this.worldInfo.setRainTime((int) duration);
++	}
++	
++	@Override
++	public void setThudering(boolean state, double duration) {
++		this.worldInfo.setThundering(state);
++		this.worldInfo.setThunderTime((int) duration);
++	}
++	
++	@Override
++	public void strikeLightning(int x, int y, int z) {
++		this.addWeatherEffect(new EntityLightningBolt(this, x, y, z));
++	}
+ }

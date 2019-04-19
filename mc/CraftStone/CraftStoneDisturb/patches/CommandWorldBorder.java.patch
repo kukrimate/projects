@@ -1,0 +1,39 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandWorldBorder.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandWorldBorder.java	2014-12-02 18:26:21.560494300 +0100
+@@ -17,15 +17,11 @@
+       return "worldborder";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.worldborder.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, NumberInvalidException {
+       if(var2.length < 1) {
+          throw new WrongUsageException("commands.worldborder.usage", new Object[0]);
+       } else {
+@@ -76,7 +72,7 @@
+                throw new WrongUsageException("commands.worldborder.center.usage", new Object[0]);
+             }
+ 
+-            BlockPos var10 = var1.getPosition();
++            BlockPos var10 = var1.getVanillaPosition();
+             double var5 = func_175761_b((double)var10.getX() + 0.5D, var2[1], true);
+             double var7 = func_175761_b((double)var10.getZ() + 0.5D, var2[2], true);
+             var3.setCenter(var5, var7);
+@@ -138,8 +134,8 @@
+       }
+    }
+ 
+-   protected WorldBorder getWorldBorder() {
+-      return MinecraftServer.getServer().worldServers[0].getWorldBorder();
++   protected WorldBorder getWorldBorder() { //TEMP
++      return MinecraftServer.getServer().worldServers.get(0).getWorldBorder();
+    }
+ 
+    public List addTabCompletionOptions(ICommandSender var1, String[] var2, BlockPos var3) {

@@ -1,0 +1,28 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\NettyEncryptingEncoder.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\NettyEncryptingEncoder.java	2014-11-28 14:55:04.835311100 +0100
+@@ -3,7 +3,10 @@
+ import io.netty.buffer.ByteBuf;
+ import io.netty.channel.ChannelHandlerContext;
+ import io.netty.handler.codec.MessageToByteEncoder;
++
+ import javax.crypto.Cipher;
++import javax.crypto.ShortBufferException;
++
+ import net.minecraft.network.NettyEncryptionTranslator;
+ 
+ public class NettyEncryptingEncoder extends MessageToByteEncoder {
+@@ -15,12 +18,12 @@
+       this.encryptionCodec = new NettyEncryptionTranslator(var1);
+    }
+ 
+-   protected void encode(ChannelHandlerContext var1, ByteBuf var2, ByteBuf var3) {
++   protected void encode(ChannelHandlerContext var1, ByteBuf var2, ByteBuf var3) throws ShortBufferException {
+       this.encryptionCodec.cipher(var2, var3);
+    }
+ 
+    // $FF: synthetic method
+-   protected void encode(ChannelHandlerContext var1, Object var2, ByteBuf var3) {
++   protected void encode(ChannelHandlerContext var1, Object var2, ByteBuf var3) throws ShortBufferException {
+       this.encode(var1, (ByteBuf)var2, var3);
+    }
+ }

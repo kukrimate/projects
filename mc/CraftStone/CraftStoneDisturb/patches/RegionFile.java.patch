@@ -1,0 +1,34 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\chunk\storage\RegionFile.java	2014-11-28 15:11:06.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\chunk\storage\RegionFile.java	2014-11-28 14:55:04.914313400 +0100
+@@ -207,7 +207,7 @@
+ 
+    }
+ 
+-   private void write(int var1, byte[] var2, int var3) {
++   private void write(int var1, byte[] var2, int var3) throws IOException {
+       this.dataFile.seek((long)(var1 * 4096));
+       this.dataFile.writeInt(var3 + 1);
+       this.dataFile.writeByte(2);
+@@ -226,19 +226,19 @@
+       return this.getOffset(var1, var2) != 0;
+    }
+ 
+-   private void setOffset(int var1, int var2, int var3) {
++   private void setOffset(int var1, int var2, int var3) throws IOException {
+       this.offsets[var1 + var2 * 32] = var3;
+       this.dataFile.seek((long)((var1 + var2 * 32) * 4));
+       this.dataFile.writeInt(var3);
+    }
+ 
+-   private void setChunkTimestamp(int var1, int var2, int var3) {
++   private void setChunkTimestamp(int var1, int var2, int var3) throws IOException {
+       this.chunkTimestamps[var1 + var2 * 32] = var3;
+       this.dataFile.seek((long)(4096 + (var1 + var2 * 32) * 4));
+       this.dataFile.writeInt(var3);
+    }
+ 
+-   public void close() {
++   public void close() throws IOException {
+       if(this.dataFile != null) {
+          this.dataFile.close();
+       }

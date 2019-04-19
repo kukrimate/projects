@@ -1,0 +1,29 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\LongHashMap.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\LongHashMap.java	2014-11-28 17:53:48.965076500 +0100
+@@ -1,5 +1,9 @@
+ package net.minecraft.util;
+ 
++import java.util.Collection;
++
++import com.google.common.collect.Lists;
++
+ 
+ public class LongHashMap {
+ 
+@@ -14,6 +18,16 @@
+    public LongHashMap() {
+       this.field_180201_c = this.hashArray.length - 1;
+    }
++   
++   //CraftStone start
++   public Collection entries() {
++	   Collection collection = Lists.newArrayList();
++	   for (Entry entry : hashArray) {
++		   collection.add(entry.value);
++	   }
++	   return collection;
++   }
++   //CraftStone end
+ 
+    private static int getHashedKey(long var0) {
+       return hash((int)(var0 ^ var0 >>> 32));

@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = '1.0'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+	mavenCentral()
+}
+
+jar {
+	manifest {
+        attributes 'Implementation-Title': rootProject.name, 'Implementation-Version': version
+    }
+	baseName = rootProject.name
+}
+
+dependencies {
+	compile files('libs/stone.jar')
+}

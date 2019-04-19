@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\ChatComponentTranslation.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\ChatComponentTranslation.java	2014-11-28 14:55:04.893312200 +0100
+@@ -225,9 +225,4 @@
+       return this.formatArgs;
+    }
+ 
+-   // $FF: synthetic method
+-   public IChatComponent createCopy() {
+-      return this.createCopy();
+-   }
+-
+ }

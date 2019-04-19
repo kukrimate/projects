@@ -1,0 +1,27 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandWeather.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandWeather.java	2014-12-02 18:26:16.975485900 +0100
+@@ -16,22 +16,18 @@
+       return "weather";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.weather.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws NumberInvalidException, WrongUsageException {
+       if(var2.length >= 1 && var2.length <= 2) {
+          int var3 = (300 + (new Random()).nextInt(600)) * 20;
+          if(var2.length >= 2) {
+             var3 = parseInt(var2[1], 1, 1000000) * 20;
+          }
+ 
+-         WorldServer var4 = MinecraftServer.getServer().worldServers[0];
++         WorldServer var4 = MinecraftServer.getServer().worldServers.get(0); //TEMP
+          WorldInfo var5 = var4.getWorldInfo();
+          if("clear".equalsIgnoreCase(var2[0])) {
+             var5.func_176142_i(var3);

@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\passive\EntityCow.java	2014-11-28 15:10:48.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\passive\EntityCow.java	2014-11-28 14:55:04.775311000 +0100
+@@ -108,9 +108,4 @@
+    public float getEyeHeight() {
+       return this.height;
+    }
+-
+-   // $FF: synthetic method
+-   public EntityAgeable createChild(EntityAgeable var1) {
+-      return this.createChild(var1);
+-   }
+ }

@@ -1,0 +1,43 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandSaveAll.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandSaveAll.java	2014-11-28 16:54:23.839863100 +0100
+@@ -27,28 +27,25 @@
+ 
+       try {
+          int var4;
+-         WorldServer var5;
+          boolean var6;
+-         for(var4 = 0; var4 < var3.worldServers.length; ++var4) {
+-            if(var3.worldServers[var4] != null) {
+-               var5 = var3.worldServers[var4];
+-               var6 = var5.disableLevelSaving;
+-               var5.disableLevelSaving = false;
+-               var5.saveAllChunks(true, (IProgressUpdate)null);
+-               var5.disableLevelSaving = var6;
++         for(WorldServer world : var3.worldServers) {
++            if(world != null) {
++               var6 = world.disableLevelSaving;
++               world.disableLevelSaving = false;
++               world.saveAllChunks(true, (IProgressUpdate)null);
++               world.disableLevelSaving = var6;
+             }
+          }
+ 
+          if(var2.length > 0 && "flush".equals(var2[0])) {
+             var1.addChatMessage(new ChatComponentTranslation("commands.save.flushStart", new Object[0]));
+ 
+-            for(var4 = 0; var4 < var3.worldServers.length; ++var4) {
+-               if(var3.worldServers[var4] != null) {
+-                  var5 = var3.worldServers[var4];
+-                  var6 = var5.disableLevelSaving;
+-                  var5.disableLevelSaving = false;
+-                  var5.saveChunkData();
+-                  var5.disableLevelSaving = var6;
++            for(WorldServer world : var3.worldServers) {
++               if(world != null) {
++                  var6 = world.disableLevelSaving;
++                  world.disableLevelSaving = false;
++                  world.saveChunkData();
++                  world.disableLevelSaving = var6;
+                }
+             }
+ 

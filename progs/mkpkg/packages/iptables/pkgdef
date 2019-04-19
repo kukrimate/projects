@@ -1,0 +1,14 @@
+pkg_name="iptables"
+pkg_ver="1.6.2"
+pkg_src="https://netfilter.org/projects/$pkg_name/files/$pkg_name-$pkg_ver.tar.bz2"
+
+build()
+{
+	$UNPACK_DIR/$pkg_name-$pkg_ver/configure --host=$GNU_TRIPLET --prefix=/usr
+	make
+}
+
+package_target()
+{
+	make DESTDIR=$ARCHIVE_DIR install
+}

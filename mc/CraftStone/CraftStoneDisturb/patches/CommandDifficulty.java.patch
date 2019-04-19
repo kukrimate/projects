@@ -1,0 +1,28 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandDifficulty.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandDifficulty.java	2014-12-02 18:24:47.745224900 +0100
+@@ -15,15 +15,11 @@
+       return "difficulty";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.difficulty.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, NumberInvalidException {
+       if(var2.length <= 0) {
+          throw new WrongUsageException("commands.difficulty.usage", new Object[0]);
+       } else {
+@@ -33,7 +29,7 @@
+       }
+    }
+ 
+-   protected EnumDifficulty func_180531_e(String var1) {
++   protected EnumDifficulty func_180531_e(String var1) throws NumberInvalidException {
+       return !var1.equalsIgnoreCase("peaceful") && !var1.equalsIgnoreCase("p")?(!var1.equalsIgnoreCase("easy") && !var1.equalsIgnoreCase("e")?(!var1.equalsIgnoreCase("normal") && !var1.equalsIgnoreCase("n")?(!var1.equalsIgnoreCase("hard") && !var1.equalsIgnoreCase("h")?EnumDifficulty.getDifficultyEnum(parseInt(var1, 0, 3)):EnumDifficulty.HARD):EnumDifficulty.NORMAL):EnumDifficulty.EASY):EnumDifficulty.PEACEFUL;
+    }
+ 

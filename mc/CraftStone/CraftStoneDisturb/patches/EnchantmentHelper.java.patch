@@ -1,0 +1,48 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\enchantment\EnchantmentHelper.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\enchantment\EnchantmentHelper.java	2014-11-30 18:48:51.232420800 +0100
+@@ -164,7 +164,7 @@
+       field_151388_d.field_151363_b = var1;
+       field_151388_d.field_151364_a = var0;
+       if(var0 != null) {
+-         applyEnchantmentModifierArray(field_151388_d, var0.getInventory());
++         applyEnchantmentModifierArray(field_151388_d, var0.getVanillaInventory());
+       }
+ 
+       if(var1 instanceof EntityPlayer) {
+@@ -177,7 +177,7 @@
+       field_151389_e.field_151366_a = var0;
+       field_151389_e.field_151365_b = var1;
+       if(var0 != null) {
+-         applyEnchantmentModifierArray(field_151389_e, var0.getInventory());
++         applyEnchantmentModifierArray(field_151389_e, var0.getVanillaInventory());
+       }
+ 
+       if(var0 instanceof EntityPlayer) {
+@@ -195,11 +195,11 @@
+    }
+ 
+    public static int func_180319_a(Entity var0) {
+-      return getMaxEnchantmentLevel(Enchantment.field_180317_h.effectId, var0.getInventory());
++      return getMaxEnchantmentLevel(Enchantment.field_180317_h.effectId, var0.getVanillaInventory());
+    }
+ 
+    public static int func_180318_b(Entity var0) {
+-      return getMaxEnchantmentLevel(Enchantment.field_180316_k.effectId, var0.getInventory());
++      return getMaxEnchantmentLevel(Enchantment.field_180316_k.effectId, var0.getVanillaInventory());
+    }
+ 
+    public static int getEfficiencyModifier(EntityLivingBase var0) {
+@@ -227,11 +227,11 @@
+    }
+ 
+    public static boolean getAquaAffinityModifier(EntityLivingBase var0) {
+-      return getMaxEnchantmentLevel(Enchantment.aquaAffinity.effectId, var0.getInventory()) > 0;
++      return getMaxEnchantmentLevel(Enchantment.aquaAffinity.effectId, var0.getVanillaInventory()) > 0;
+    }
+ 
+    public static ItemStack func_92099_a(Enchantment var0, EntityLivingBase var1) {
+-      ItemStack[] var2 = var1.getInventory();
++      ItemStack[] var2 = var1.getVanillaInventory();
+       int var3 = var2.length;
+ 
+       for(int var4 = 0; var4 < var3; ++var4) {

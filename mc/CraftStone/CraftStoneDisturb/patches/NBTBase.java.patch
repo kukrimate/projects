@@ -1,0 +1,23 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\NBTBase.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\NBTBase.java	2014-11-28 14:55:04.795311000 +0100
+@@ -2,6 +2,8 @@
+ 
+ import java.io.DataInput;
+ import java.io.DataOutput;
++import java.io.IOException;
++
+ import net.minecraft.nbt.NBTSizeTracker;
+ import net.minecraft.nbt.NBTTagByte;
+ import net.minecraft.nbt.NBTTagByteArray;
+@@ -21,9 +23,9 @@
+    public static final String[] NBT_TYPES = new String[]{"END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};
+ 
+ 
+-   abstract void write(DataOutput var1);
++   abstract void write(DataOutput var1) throws IOException;
+ 
+-   abstract void read(DataInput var1, int var2, NBTSizeTracker var3);
++   abstract void read(DataInput var1, int var2, NBTSizeTracker var3) throws IOException;
+ 
+    public abstract String toString();
+ 

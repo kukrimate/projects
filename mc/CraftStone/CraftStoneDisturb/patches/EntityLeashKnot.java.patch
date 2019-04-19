@@ -1,0 +1,10 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\EntityLeashKnot.java	2014-11-28 15:10:44.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\EntityLeashKnot.java	2014-12-02 18:20:15.949256800 +0100
+@@ -2,6 +2,7 @@
+ 
+ import java.util.Iterator;
+ import java.util.List;
++
+ import net.minecraft.block.BlockFence;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityHanging;

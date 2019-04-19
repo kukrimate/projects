@@ -1,0 +1,26 @@
+defaultTasks 'clean', 'build'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = '1.0'
+description = 'DiffMaker'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+	manifest {
+        attributes 'Implementation-Title': rootProject.name, 'Implementation-Version': version, 'Main-Class': 'com.craftstone.diffmaker.DiffMaker'
+    }
+	baseName = rootProject.name
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+dependencies {
+	//currently no dependencies
+}

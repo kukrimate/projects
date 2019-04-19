@@ -1,0 +1,26 @@
+pkg_name="busybox"
+pkg_ver="1.28.3"
+pkg_src=(https://busybox.net/downloads/busybox-1.28.3.tar.bz2
+		 busybox-$pkg_ver-config)
+
+prepare()
+{
+	# Copy config
+	cp $SRC_DIR/busybox-$pkg_ver-config busybox-$pkg_ver/.config
+}
+
+build()
+{
+	# Build inside the source directory
+	cd "$UNPACK_DIR/busybox-$pkg_ver"
+
+	# Build
+	make
+}
+
+package_target()
+{
+	# Was built inside the source directory
+	cd "$UNPACK_DIR/busybox-$pkg_ver"
+	make CONFIG_PREFIX="$ARCHIVE_DIR" install
+}

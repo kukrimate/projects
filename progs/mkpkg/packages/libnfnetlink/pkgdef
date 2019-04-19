@@ -1,0 +1,31 @@
+pkg_name="libnfnetlink"
+pkg_ver="1.0.1"
+pkg_src=($pkg_name-$pkg_ver-types.patch)
+
+prepare()
+{
+	if [ ! -d $pkg_name ]; then
+		# Clone
+		git clone git://git.netfilter.org/$pkg_name
+		cd $pkg_name
+		git checkout $pkg_name-$pkg_ver
+
+		# Patch
+		for p in ${pkg_src[@]}; do
+			patch -p1 < $SRC_DIR/$p
+		done
+
+		./autogen.sh
+	fi
+}
+
+build()
+{
+	$UNPACK_DIR/$pkg_name/configure --prefix=/usr --host=$GNU_TRIPLET
+	make
+}
+
+package_target()
+{
+	make DESTDIR=$ARCHIVE_DIR install
+}

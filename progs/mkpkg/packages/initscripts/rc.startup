@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# /dev and /dev/pts
+mount -t devtmpfs none /dev
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+
+# /proc and /sys
+mount -t proc none /proc
+mount -t sysfs none /sys
+
+# Set the hostname
+HOSTNAME=$(cat /etc/hostname)
+if [ $? -eq 0 ]; then
+	hostname $HOSTNAME
+else
+	hostname "test"
+fi
+
+# Setup loopback interface
+ip link add lo type loopback
+ip link set lo up
+ip addr add 127.0.0.1/8 dev lo
+ip -6 addr add ::1/128 dev lo

@@ -1,0 +1,153 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandHandler.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandHandler.java	2014-12-02 20:15:42.633374200 +0100
+@@ -3,12 +3,14 @@
+ import com.google.common.collect.Lists;
+ import com.google.common.collect.Maps;
+ import com.google.common.collect.Sets;
++
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.Map.Entry;
++
+ import net.minecraft.command.CommandBase;
+ import net.minecraft.command.CommandException;
+ import net.minecraft.command.CommandResultStats;
+@@ -19,8 +21,11 @@
+ import net.minecraft.command.WrongUsageException;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.util.BlockPos;
++import net.minecraft.util.ChatComponentText;
+ import net.minecraft.util.ChatComponentTranslation;
+ import net.minecraft.util.EnumChatFormatting;
++import net.minecraft.util.IChatComponent;
++
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+@@ -31,11 +36,64 @@
+    private final Set commandSet = Sets.newHashSet();
+ 
+ 
+-   public int executeCommand(ICommandSender var1, String var2) {
+-      var2 = var2.trim();
++   public int executeCommand(ICommandSender var1, String var2) { //CraftStone
++	   String[] input = var2.split(" ");
++	   String commandName = input[0];
++	   
++	   if(commandName.startsWith("/")) {
++		   commandName = commandName.substring(1);
++	   }
++	   
++	   String[] params = dropFirstString(input);
++	   
++	   CommandBase command = (CommandBase)this.commandMap.get(commandName);
++	   
++	   int usrIndex = this.getUsernameIndex(command, params);
++	   int result = 0;
++	   
++	   IChatComponent message = null;
++	   
++	   if (command == null) {
++		   message = new ChatComponentText("Can't find command /" + commandName);
++		   message.getChatStyle().setColor(EnumChatFormatting.RED);
++		   var1.addChatMessage(message);
++	   } else if(command.canCommandSenderUseCommand(var1)) {
++	         if(usrIndex > -1) {
++	             List<?> var12 = PlayerSelector.func_179656_b(var1, params[usrIndex], Entity.class);
++	             String var9 = params[usrIndex];
++	             var1.func_174794_a(CommandResultStats.Type.AFFECTED_ENTITIES, var12.size());
++	             Iterator<?> var10 = var12.iterator();
++
++	             while(var10.hasNext()) {
++	                Entity var11 = (Entity)var10.next();
++	                params[usrIndex] = var11.getUniqueID().toString();
++	                if(this.processCommand(var1, params, command, var2)) {
++	                   ++result;
++	                }
++	             }
++
++	             params[usrIndex] = var9;
++	          } else {
++	             var1.func_174794_a(CommandResultStats.Type.AFFECTED_ENTITIES, 1);
++	             if(this.processCommand(var1, params, command, var2)) {
++	                ++result;
++	             }
++	          }
++	   } else {
++		   message = new ChatComponentText(command.getPermissionMessage());
++		   message.getChatStyle().setColor(EnumChatFormatting.RED);
++		   var1.addChatMessage(message);
++	   }
++	   
++	   var1.func_174794_a(CommandResultStats.Type.SUCCESS_COUNT, result);
++	   return result;
++	   
++      /*var2 = var2.trim();
+       if(var2.startsWith("/")) {
+          var2 = var2.substring(1);
+       }
++      
++      System.out.println("No perm");
+ 
+       String[] var3 = var2.split(" ");
+       String var4 = var3[0];
+@@ -43,9 +101,9 @@
+       ICommand var5 = (ICommand)this.commandMap.get(var4);
+       int var6 = this.getUsernameIndex(var5, var3);
+       int var7 = 0;
+-      ChatComponentTranslation var8;
++      IChatComponent var8;
+       if(var5 == null) {
+-         var8 = new ChatComponentTranslation("commands.generic.notFound", new Object[0]);
++         var8 = new ChatComponentTranslation("commands.generic.otFound", new Object[0]);
+          var8.getChatStyle().setColor(EnumChatFormatting.RED);
+          var1.addChatMessage(var8);
+       } else if(var5.canCommandSenderUseCommand(var1)) {
+@@ -71,16 +129,16 @@
+             }
+          }
+       } else {
+-         var8 = new ChatComponentTranslation("commands.generic.permission", new Object[0]);
++         var8 = new ChatComponentText(var5.getPermissionMessage()); //CraftStone
+          var8.getChatStyle().setColor(EnumChatFormatting.RED);
+          var1.addChatMessage(var8);
+       }
+ 
+       var1.func_174794_a(CommandResultStats.Type.SUCCESS_COUNT, var7);
+-      return var7;
++      return var7;*/
+    }
+ 
+-   protected boolean func_175786_a(ICommandSender var1, String[] var2, ICommand var3, String var4) {
++   protected boolean processCommand(ICommandSender var1, String[] var2, ICommand var3, String var4) { //CraftStone renamed
+       ChatComponentTranslation var6;
+       try {
+          var3.processCommand(var1, var2);
+@@ -103,13 +161,11 @@
+       return false;
+    }
+ 
+-   public ICommand registerCommand(ICommand var1) {
++   public ICommand registerCommand(ICommand var1) { //CraftStone
+       this.commandMap.put(var1.getCommandName(), var1);
+       this.commandSet.add(var1);
+-      Iterator var2 = var1.getCommandAliases().iterator();
+ 
+-      while(var2.hasNext()) {
+-         String var3 = (String)var2.next();
++      for (String var3 : var1.getCommandAliases()) {
+          ICommand var4 = (ICommand)this.commandMap.get(var3);
+          if(var4 == null || !var4.getCommandName().equals(var3)) {
+             this.commandMap.put(var3, var1);
+@@ -119,7 +175,7 @@
+       return var1;
+    }
+ 
+-   private static String[] dropFirstString(String[] var0) {
++   public static String[] dropFirstString(String[] var0) { //CraftStone
+       String[] var1 = new String[var0.length - 1];
+       System.arraycopy(var0, 1, var1, 0, var0.length - 1);
+       return var1;

@@ -1,0 +1,13 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\network\NetHandlerLoginServer.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\network\NetHandlerLoginServer.java	2014-11-28 14:55:04.883311600 +0100
+@@ -92,10 +92,6 @@
+                public void operationComplete(ChannelFuture var1) {
+                   NetHandlerLoginServer.this.networkManager.setCompressionTreshold(NetHandlerLoginServer.this.server.getNetworkCompressionTreshold());
+                }
+-               // $FF: synthetic method
+-               public void operationComplete(Future var1) {
+-                  this.operationComplete((ChannelFuture)var1);
+-               }
+             }, new GenericFutureListener[0]);
+          }
+ 

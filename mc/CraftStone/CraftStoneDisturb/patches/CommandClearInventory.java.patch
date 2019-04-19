@@ -1,0 +1,15 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandClearInventory.java	2014-11-28 15:10:36.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandClearInventory.java	2014-12-02 18:24:33.825171200 +0100
+@@ -24,11 +24,7 @@
+       return "commands.clear.usage";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       EntityPlayerMP var3 = var2.length == 0?getCommandSenderAsPlayer(var1):getPlayer(var1, var2[0]);
+       Item var4 = var2.length >= 2?getItemByText(var1, var2[1]):null;
+       int var5 = var2.length >= 3?parseInt(var2[2], -1):-1;

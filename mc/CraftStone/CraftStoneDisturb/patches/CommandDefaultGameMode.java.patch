@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandDefaultGameMode.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandDefaultGameMode.java	2014-11-28 14:55:04.683309700 +0100
+@@ -19,7 +19,7 @@
+       return "commands.defaultgamemode.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, NumberInvalidException {
+       if(var2.length <= 0) {
+          throw new WrongUsageException("commands.defaultgamemode.usage", new Object[0]);
+       } else {

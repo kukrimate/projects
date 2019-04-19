@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\chunk\EmptyChunk.java	2014-11-28 15:11:06.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\chunk\EmptyChunk.java	2014-11-28 17:47:30.545023300 +0100
+@@ -86,7 +86,7 @@
+    }
+ 
+    public Random getRandomWithSeed(long var1) {
+-      return new Random(this.getWorld().getSeed() + (long)(this.xPosition * this.xPosition * 4987142) + (long)(this.xPosition * 5947611) + (long)(this.zPosition * this.zPosition) * 4392871L + (long)(this.zPosition * 389711) ^ var1);
++      return new Random(this.getVanillaWorld().getSeed() + (long)(this.xPosition * this.xPosition * 4987142) + (long)(this.xPosition * 5947611) + (long)(this.zPosition * this.zPosition) * 4392871L + (long)(this.zPosition * 389711) ^ var1);
+    }
+ 
+    public boolean isEmpty() {

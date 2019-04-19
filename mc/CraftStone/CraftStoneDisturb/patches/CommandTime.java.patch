@@ -1,0 +1,40 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandTime.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandTime.java	2014-12-02 18:26:00.483434800 +0100
+@@ -15,15 +15,11 @@
+       return "time";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.time.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, NumberInvalidException {
+       if(var2.length > 1) {
+          int var3;
+          if(var2[0].equals("set")) {
+@@ -72,16 +68,15 @@
+    }
+ 
+    protected void setTime(ICommandSender var1, int var2) {
+-      for(int var3 = 0; var3 < MinecraftServer.getServer().worldServers.length; ++var3) {
+-         MinecraftServer.getServer().worldServers[var3].setWorldTime((long)var2);
++      for(WorldServer world : MinecraftServer.getServer().worldServers) {
++    	  world.setWorldTime((long)var2);
+       }
+ 
+    }
+ 
+    protected void addTime(ICommandSender var1, int var2) {
+-      for(int var3 = 0; var3 < MinecraftServer.getServer().worldServers.length; ++var3) {
+-         WorldServer var4 = MinecraftServer.getServer().worldServers[var3];
+-         var4.setWorldTime(var4.getWorldTime() + (long)var2);
++      for(WorldServer world : MinecraftServer.getServer().worldServers) {
++    	  world.setWorldTime(world.getWorldTime() + (long)var2);
+       }
+ 
+    }

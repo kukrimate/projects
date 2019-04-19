@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S26PacketMapChunkBulk.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S26PacketMapChunkBulk.java	2014-11-28 17:47:30.556524800 +0100
+@@ -23,7 +23,7 @@
+       this.field_149266_a = new int[var2];
+       this.field_149264_b = new int[var2];
+       this.field_179755_c = new S21PacketChunkData.Extracted[var2];
+-      this.field_149267_h = !((Chunk)var1.get(0)).getWorld().provider.getHasNoSky();
++      this.field_149267_h = !((Chunk)var1.get(0)).getVanillaWorld().provider.getHasNoSky();
+ 
+       for(int var3 = 0; var3 < var2; ++var3) {
+          Chunk var4 = (Chunk)var1.get(var3);

@@ -1,0 +1,20 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\management\PreYggdrasilConverter.java	2014-11-28 15:11:00.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\management\PreYggdrasilConverter.java	2014-12-02 18:28:56.373023200 +0100
+@@ -50,7 +50,7 @@
+    public static final File OLD_WHITELIST_FILE = new File("white-list.txt");
+ 
+ 
+-   static List readFile(File var0, Map var1) {
++   static List readFile(File var0, Map var1) throws IOException {
+       List var2 = Files.readLines(var0, Charsets.UTF_8);
+       Iterator var3 = var2.iterator();
+ 
+@@ -198,7 +198,7 @@
+             ProfileLookupCallback var3 = new ProfileLookupCallback() {
+                public void onProfileLookupSucceeded(GameProfile var1x) {
+                   var0.getPlayerProfileCache().func_152649_a(var1x);
+-                  var1.addEntry(new UserListOpsEntry(var1x, var0.getOpPermissionLevel()));
++                  var1.addEntry(new UserListOpsEntry(var1x));
+                }
+                public void onProfileLookupFailed(GameProfile var1x, Exception var2) {
+                   PreYggdrasilConverter.LOGGER.warn("Could not lookup oplist entry for " + var1x.getName(), var2);

@@ -1,0 +1,17 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\passive\EntityMooshroom.java	2014-11-28 15:10:48.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\passive\EntityMooshroom.java	2014-11-28 14:55:04.785311000 +0100
+@@ -63,14 +63,4 @@
+    public EntityMooshroom createChild(EntityAgeable var1) {
+       return new EntityMooshroom(this.worldObj);
+    }
+-
+-   // $FF: synthetic method
+-   public EntityCow createChild(EntityAgeable var1) {
+-      return this.createChild(var1);
+-   }
+-
+-   // $FF: synthetic method
+-   public EntityAgeable createChild(EntityAgeable var1) {
+-      return this.createChild(var1);
+-   }
+ }

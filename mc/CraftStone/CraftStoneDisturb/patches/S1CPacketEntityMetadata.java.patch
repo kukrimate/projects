@@ -1,0 +1,20 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S1CPacketEntityMetadata.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S1CPacketEntityMetadata.java	2014-11-28 14:55:04.855311100 +0100
+@@ -1,6 +1,8 @@
+ package net.minecraft.network.play.server;
+ 
++import java.io.IOException;
+ import java.util.List;
++
+ import net.minecraft.entity.DataWatcher;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -25,7 +27,7 @@
+ 
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_149379_a = var1.readVarIntFromBuffer();
+       this.field_149378_b = DataWatcher.readWatchedListFromPacketBuffer(var1);
+    }

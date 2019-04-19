@@ -1,0 +1,25 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandBlockLogic.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandBlockLogic.java	2014-12-02 18:22:15.110708000 +0100
+@@ -65,8 +65,8 @@
+       this.field_175575_g.func_179668_a(var1);
+    }
+ 
+-   public boolean canCommandSenderUseCommand(int var1, String var2) {
+-      return var1 <= 2;
++   public boolean canCommandSenderUseCommand(String permission) { //CraftStone
++      return true;
+    }
+ 
+    public void setCommand(String var1) {
+@@ -139,9 +139,9 @@
+ 
+    }
+ 
+-   public boolean sendCommandFeedback() {
++   public boolean sendCommandFeedback() { //TEMP
+       MinecraftServer var1 = MinecraftServer.getServer();
+-      return var1 == null || !var1.func_175578_N() || var1.worldServers[0].getGameRules().getGameRuleBooleanValue("commandBlockOutput");
++      return var1 == null || !var1.func_175578_N() || var1.worldServers.get(0).getGameRules().getGameRuleBooleanValue("commandBlockOutput");
+    }
+ 
+    public void func_174794_a(CommandResultStats.Type var1, int var2) {

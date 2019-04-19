@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\client\C17PacketCustomPayload.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\client\C17PacketCustomPayload.java	2014-11-28 14:55:04.845311100 +0100
+@@ -13,7 +13,7 @@
+    private PacketBuffer data;
+ 
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.channel = var1.readStringFromBuffer(20);
+       int var2 = var1.readableBytes();
+       if(var2 >= 0 && var2 <= 32767) {

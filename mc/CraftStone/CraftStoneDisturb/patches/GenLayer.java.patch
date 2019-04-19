@@ -1,0 +1,22 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\gen\layer\GenLayer.java	2014-11-28 15:11:10.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\gen\layer\GenLayer.java	2014-11-28 14:55:04.916313500 +0100
+@@ -167,19 +167,11 @@
+                public String call() {
+                   return String.valueOf(var2);
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             var6.addCrashSectionCallable("Biome B", new Callable() {
+                public String call() {
+                   return String.valueOf(var3);
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             throw new ReportedException(var5);
+          }

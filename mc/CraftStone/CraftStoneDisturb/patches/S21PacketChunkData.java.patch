@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S21PacketChunkData.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S21PacketChunkData.java	2014-11-28 17:47:30.551524100 +0100
+@@ -24,7 +24,7 @@
+       this.field_149284_a = var1.xPosition;
+       this.field_149282_b = var1.zPosition;
+       this.field_149279_g = var2;
+-      this.field_179758_c = func_179756_a(var1, var2, !var1.getWorld().provider.getHasNoSky(), var3);
++      this.field_179758_c = func_179756_a(var1, var2, !var1.getVanillaWorld().provider.getHasNoSky(), var3);
+    }
+ 
+    public void readPacketData(PacketBuffer var1) {

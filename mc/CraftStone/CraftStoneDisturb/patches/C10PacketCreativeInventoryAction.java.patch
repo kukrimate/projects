@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\client\C10PacketCreativeInventoryAction.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\client\C10PacketCreativeInventoryAction.java	2014-11-28 14:55:04.845311100 +0100
+@@ -1,5 +1,7 @@
+ package net.minecraft.network.play.client;
+ 
++import java.io.IOException;
++
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -16,7 +18,7 @@
+       var1.processCreativeInventoryAction(this);
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.slotId = var1.readShort();
+       this.stack = var1.readItemStackFromBuffer();
+    }

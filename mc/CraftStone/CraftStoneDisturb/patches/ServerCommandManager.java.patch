@@ -1,0 +1,93 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\ServerCommandManager.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\ServerCommandManager.java	2014-12-02 20:21:06.718170300 +0100
+@@ -1,43 +1,10 @@
+ package net.minecraft.command;
+ 
+ import java.util.Iterator;
+-import net.minecraft.command.CommandBase;
+-import net.minecraft.command.CommandBlockData;
+-import net.minecraft.command.CommandClearInventory;
+-import net.minecraft.command.CommandClone;
+-import net.minecraft.command.CommandCompare;
+-import net.minecraft.command.CommandDebug;
+-import net.minecraft.command.CommandDefaultGameMode;
+-import net.minecraft.command.CommandDifficulty;
+-import net.minecraft.command.CommandEffect;
+-import net.minecraft.command.CommandEnchant;
+-import net.minecraft.command.CommandEntityData;
+-import net.minecraft.command.CommandExecuteAt;
+-import net.minecraft.command.CommandFill;
+-import net.minecraft.command.CommandGameMode;
+-import net.minecraft.command.CommandGameRule;
+-import net.minecraft.command.CommandGive;
+-import net.minecraft.command.CommandHandler;
+-import net.minecraft.command.CommandHelp;
+-import net.minecraft.command.CommandKill;
+-import net.minecraft.command.CommandParticle;
+-import net.minecraft.command.CommandPlaySound;
+-import net.minecraft.command.CommandServerKick;
+-import net.minecraft.command.CommandSetPlayerTimeout;
+-import net.minecraft.command.CommandSetSpawnpoint;
+-import net.minecraft.command.CommandShowSeed;
+-import net.minecraft.command.CommandSpreadPlayers;
+-import net.minecraft.command.CommandStats;
+-import net.minecraft.command.CommandTime;
+-import net.minecraft.command.CommandTitle;
+-import net.minecraft.command.CommandToggleDownfall;
+-import net.minecraft.command.CommandTrigger;
+-import net.minecraft.command.CommandWeather;
+-import net.minecraft.command.CommandWorldBorder;
+-import net.minecraft.command.CommandXP;
+-import net.minecraft.command.IAdminCommand;
+-import net.minecraft.command.ICommand;
+-import net.minecraft.command.ICommandSender;
++import java.util.List;
++import java.util.Map;
++import java.util.Map.Entry;
++
+ import net.minecraft.command.common.CommandReplaceItem;
+ import net.minecraft.command.server.CommandAchievement;
+ import net.minecraft.command.server.CommandBanIp;
+@@ -71,6 +38,12 @@
+ import net.minecraft.util.ChatComponentTranslation;
+ import net.minecraft.util.EnumChatFormatting;
+ 
++import com.craftstone.command.CommandWrapper;
++import com.craftstone.commands.CommandReload;
++import com.craftstone.plugin.CraftPluginManager;
++import com.craftstone.plugin.RawCommand;
++import com.craftstone.stone.command.CommandExecuter;
++
+ public class ServerCommandManager extends CommandHandler implements IAdminCommand {
+ 
+    public ServerCommandManager() {
+@@ -136,6 +109,15 @@
+       } else {
+          this.registerCommand(new CommandPublishLocalServer());
+       }
++      
++      //CraftStone
++      CraftPluginManager manager = (CraftPluginManager)MinecraftServer.getServer().getPluginManager();
++      for (Entry<RawCommand, List<CommandExecuter>> entry : manager.commandExecMap.entrySet()) {
++    	  RawCommand command = entry.getKey();
++    	  List<CommandExecuter> executer = entry.getValue();
++    	  this.registerCommand(new CommandWrapper(command.getName(), command.getAliases(), command.getUsage(),command.getDesc(), command.getPermission(), command.getPermissionMessage(), executer));
++      }
++      this.registerCommand(new CommandReload());
+ 
+       CommandBase.setAdminCommander(this);
+    }
+@@ -161,11 +143,11 @@
+          }
+       }
+ 
+-      if(var1 != var7 && var7.worldServers[0].getGameRules().getGameRuleBooleanValue("logAdminCommands")) {
++      if(var1 != var7 && var7.worldServers.get(0).getGameRules().getGameRuleBooleanValue("logAdminCommands")) { //TEMP
+          var7.addChatMessage(var8);
+       }
+ 
+-      boolean var11 = var7.worldServers[0].getGameRules().getGameRuleBooleanValue("sendCommandFeedback");
++      boolean var11 = var7.worldServers.get(0).getGameRules().getGameRuleBooleanValue("sendCommandFeedback");  //TEMP
+       if(var1 instanceof CommandBlockLogic) {
+          var11 = ((CommandBlockLogic)var1).func_175571_m();
+       }

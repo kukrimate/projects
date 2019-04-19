@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S35PacketUpdateTileEntity.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S35PacketUpdateTileEntity.java	2014-11-28 14:55:04.855311100 +0100
+@@ -1,5 +1,7 @@
+ package net.minecraft.network.play.server;
+ 
++import java.io.IOException;
++
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.Packet;
+@@ -22,7 +24,7 @@
+       this.nbt = var3;
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_179824_a = var1.readBlockPos();
+       this.metadata = var1.readUnsignedByte();
+       this.nbt = var1.readNBTTagCompoundFromBuffer();

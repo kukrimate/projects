@@ -1,0 +1,16 @@
+diff --git a/include/libnfnetlink/linux_nfnetlink_compat.h b/include/libnfnetlink/linux_nfnetlink_compat.h
+index e145176..2425b27 100644
+--- a/include/libnfnetlink/linux_nfnetlink_compat.h
++++ b/include/libnfnetlink/linux_nfnetlink_compat.h
+@@ -3,6 +3,11 @@
+ #ifndef __KERNEL__
+ /* Old nfnetlink macros for userspace */
+ 
++/* Fix crappy typenames */
++typedef uint8_t u_int8_t;
++typedef uint16_t u_int16_t;
++typedef uint32_t u_int32_t;
++
+ /* nfnetlink groups: Up to 32 maximum */
+ #define NF_NETLINK_CONNTRACK_NEW 		0x00000001
+ #define NF_NETLINK_CONNTRACK_UPDATE		0x00000002

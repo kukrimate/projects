@@ -1,0 +1,6 @@
+# binaries
+*.bin
+# objects
+*.o
+# disk images
+*.img

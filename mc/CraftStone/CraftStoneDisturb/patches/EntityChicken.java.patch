@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\passive\EntityChicken.java	2014-11-28 15:10:48.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\passive\EntityChicken.java	2014-11-28 14:55:04.775311000 +0100
+@@ -169,9 +169,4 @@
+    public void func_152117_i(boolean var1) {
+       this.field_152118_bv = var1;
+    }
+-
+-   // $FF: synthetic method
+-   public EntityAgeable createChild(EntityAgeable var1) {
+-      return this.createChild(var1);
+-   }
+ }

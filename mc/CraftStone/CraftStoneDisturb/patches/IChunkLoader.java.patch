@@ -1,0 +1,21 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\chunk\storage\IChunkLoader.java	2014-11-28 15:11:06.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\chunk\storage\IChunkLoader.java	2014-11-28 14:55:04.911313200 +0100
+@@ -1,13 +1,16 @@
+ package net.minecraft.world.chunk.storage;
+ 
++import java.io.IOException;
++
++import net.minecraft.world.MinecraftException;
+ import net.minecraft.world.World;
+ import net.minecraft.world.chunk.Chunk;
+ 
+ public interface IChunkLoader {
+ 
+-   Chunk loadChunk(World var1, int var2, int var3);
++   Chunk loadChunk(World var1, int var2, int var3) throws IOException;
+ 
+-   void saveChunk(World var1, Chunk var2);
++   void saveChunk(World var1, Chunk var2) throws MinecraftException, IOException;
+ 
+    void saveExtraChunkData(World var1, Chunk var2);
+ 

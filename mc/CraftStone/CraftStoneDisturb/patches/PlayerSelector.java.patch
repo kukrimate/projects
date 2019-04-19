@@ -1,0 +1,126 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\PlayerSelector.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\PlayerSelector.java	2014-12-02 18:30:16.369277800 +0100
+@@ -75,13 +75,13 @@
+ 
+    public static List func_179656_b(ICommandSender var0, String var1, Class var2) {
+       Matcher var3 = tokenPattern.matcher(var1);
+-      if(var3.matches() && var0.canCommandSenderUseCommand(1, "@")) {
++      if(var3.matches() /*&& var0.canCommandSenderUseCommand(1, "@")*/) { //CraftStone
+          Map var4 = getArgumentMap(var3.group(2));
+          if(!func_179655_b(var0, var4)) {
+             return Collections.emptyList();
+          } else {
+             String var5 = var3.group(1);
+-            BlockPos var6 = func_179664_b(var4, var0.getPosition());
++            BlockPos var6 = func_179664_b(var4, var0.getVanillaPosition());
+             List var7 = func_179654_a(var0, var4);
+             ArrayList var8 = Lists.newArrayList();
+             Iterator var9 = var7.iterator();
+@@ -135,11 +135,13 @@
+ 
+    private static List func_179663_a(Map var0, String var1) {
+       ArrayList var2 = Lists.newArrayList();
+-      final String var3 = func_179651_b(var0, "type");
++      String var3 = func_179651_b(var0, "type");
+       final boolean var4 = var3 != null && var3.startsWith("!");
+       if(var4) {
+          var3 = var3.substring(1);
+       }
++      
++      final String finalStr = var3;
+ 
+       boolean var6 = !var1.equals("e");
+       boolean var7 = var1.equals("r") && var3 != null;
+@@ -158,7 +160,7 @@
+       } else {
+          var2.add(new Predicate() {
+             public boolean func_179613_a(Entity var1) {
+-               return EntityList.func_180123_a(var1, var3) != var4;
++               return EntityList.func_180123_a(var1, finalStr) != var4;
+             }
+             // $FF: synthetic method
+             public boolean apply(Object var1) {
+@@ -219,11 +221,13 @@
+ 
+    private static List func_179659_d(Map var0) {
+       ArrayList var1 = Lists.newArrayList();
+-      final String var2 = func_179651_b(var0, "team");
++      String var2 = func_179651_b(var0, "team");
+       final boolean var3 = var2 != null && var2.startsWith("!");
+       if(var3) {
+          var2 = var2.substring(1);
+       }
++      
++      final String finalStr = var2;
+ 
+       if(var2 != null) {
+          var1.add(new Predicate() {
+@@ -234,7 +238,7 @@
+                   EntityLivingBase var2x = (EntityLivingBase)var1;
+                   Team var3x = var2x.getTeam();
+                   String var4 = var3x == null?"":var3x.getRegisteredName();
+-                  return var4.equals(var2) != var3;
++                  return var4.equals(finalStr) != var3;
+                }
+             }
+             // $FF: synthetic method
+@@ -303,16 +307,18 @@
+ 
+    private static List func_179647_f(Map var0) {
+       ArrayList var1 = Lists.newArrayList();
+-      final String var2 = func_179651_b(var0, "name");
++      String var2 = func_179651_b(var0, "name");
+       final boolean var3 = var2 != null && var2.startsWith("!");
+       if(var3) {
+          var2 = var2.substring(1);
+       }
++      
++      final String finalStr = var2;
+ 
+       if(var2 != null) {
+          var1.add(new Predicate() {
+             public boolean func_179600_a(Entity var1) {
+-               return var1.getName().equals(var2) != var3;
++               return var1.getName().equals(finalStr) != var3;
+             }
+             // $FF: synthetic method
+             public boolean apply(Object var1) {
+@@ -348,15 +354,19 @@
+ 
+    private static List func_179662_g(Map var0) {
+       ArrayList var1 = Lists.newArrayList();
+-      final int var2;
+-      final int var3;
++      int var2;
++      int var3;
+       if(var0.containsKey("rym") || var0.containsKey("ry")) {
+          var2 = func_179650_a(func_179653_a(var0, "rym", 0));
+          var3 = func_179650_a(func_179653_a(var0, "ry", 359));
++         
++         final int finalVar2 = var2;
++         final int finalVar3 = var3;
++         
+          var1.add(new Predicate() {
+             public boolean func_179591_a(Entity var1) {
+                int var2x = PlayerSelector.func_179650_a((int)Math.floor((double)var1.rotationYaw));
+-               return var2 > var3?var2x >= var2 || var2x <= var3:var2x >= var2 && var2x <= var3;
++               return finalVar2 > finalVar3?var2x >= finalVar2 || var2x <= finalVar3:var2x >= finalVar2 && var2x <= finalVar3;
+             }
+             // $FF: synthetic method
+             public boolean apply(Object var1) {
+@@ -368,10 +378,14 @@
+       if(var0.containsKey("rxm") || var0.containsKey("rx")) {
+          var2 = func_179650_a(func_179653_a(var0, "rxm", 0));
+          var3 = func_179650_a(func_179653_a(var0, "rx", 359));
++         
++         final int finalVar2 = var2;
++         final int finalVar3 = var3;
++         
+          var1.add(new Predicate() {
+             public boolean func_179616_a(Entity var1) {
+                int var2x = PlayerSelector.func_179650_a((int)Math.floor((double)var1.rotationPitch));
+-               return var2 > var3?var2x >= var2 || var2x <= var3:var2x >= var2 && var2x <= var3;
++               return finalVar2 > finalVar3?var2x >= finalVar2 || var2x <= finalVar3:var2x >= finalVar2 && var2x <= finalVar3;
+             }
+             // $FF: synthetic method
+             public boolean apply(Object var1) {

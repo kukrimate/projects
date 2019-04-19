@@ -1,0 +1,31 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\ICommandSender.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\ICommandSender.java	2014-12-02 18:13:32.507019100 +0100
+@@ -1,5 +1,7 @@
+ package net.minecraft.command;
+ 
++import com.craftstone.stone.command.CommandSender;
++
+ import net.minecraft.command.CommandResultStats;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.util.BlockPos;
+@@ -7,7 +9,7 @@
+ import net.minecraft.util.Vec3;
+ import net.minecraft.world.World;
+ 
+-public interface ICommandSender {
++public interface ICommandSender extends CommandSender { //CraftStone
+ 
+    String getName();
+ 
+@@ -15,9 +17,9 @@
+ 
+    void addChatMessage(IChatComponent var1);
+ 
+-   boolean canCommandSenderUseCommand(int var1, String var2);
++   boolean canCommandSenderUseCommand(String permission); //CraftStone
+ 
+-   BlockPos getPosition();
++   BlockPos getVanillaPosition();
+ 
+    Vec3 getPositionVector();
+ 

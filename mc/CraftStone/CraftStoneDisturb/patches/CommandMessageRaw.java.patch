@@ -1,0 +1,41 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandMessageRaw.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandMessageRaw.java	2014-12-02 18:27:15.852683000 +0100
+@@ -1,9 +1,13 @@
+ package net.minecraft.command.server;
+ 
+ import com.google.gson.JsonParseException;
++
+ import java.util.List;
++
+ import net.minecraft.command.CommandBase;
++import net.minecraft.command.EntityNotFoundException;
+ import net.minecraft.command.ICommandSender;
++import net.minecraft.command.PlayerNotFoundException;
+ import net.minecraft.command.SyntaxErrorException;
+ import net.minecraft.command.WrongUsageException;
+ import net.minecraft.entity.player.EntityPlayerMP;
+@@ -11,6 +15,7 @@
+ import net.minecraft.util.BlockPos;
+ import net.minecraft.util.ChatComponentProcessor;
+ import net.minecraft.util.IChatComponent;
++
+ import org.apache.commons.lang3.exception.ExceptionUtils;
+ 
+ public class CommandMessageRaw extends CommandBase {
+@@ -19,15 +24,11 @@
+       return "tellraw";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.tellraw.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws SyntaxErrorException, PlayerNotFoundException, EntityNotFoundException {
+       if(var2.length < 2) {
+          throw new WrongUsageException("commands.tellraw.usage", new Object[0]);
+       } else {

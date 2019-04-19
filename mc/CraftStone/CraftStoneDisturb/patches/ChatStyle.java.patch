@@ -1,0 +1,91 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\ChatStyle.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\ChatStyle.java	2014-11-28 14:55:04.895312300 +0100
+@@ -348,66 +348,56 @@
+          }
+       }
+ 
+-      public JsonElement serialize(ChatStyle var1, Type var2, JsonSerializationContext var3) {
+-         if(var1.isEmpty()) {
++      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
++         if(((ChatStyle)var1).isEmpty()) {
+             return null;
+          } else {
+             JsonObject var4 = new JsonObject();
+-            if(var1.bold != null) {
+-               var4.addProperty("bold", var1.bold);
++            if(((ChatStyle)var1).bold != null) {
++               var4.addProperty("bold", ((ChatStyle)var1).bold);
+             }
+ 
+-            if(var1.italic != null) {
+-               var4.addProperty("italic", var1.italic);
++            if(((ChatStyle)var1).italic != null) {
++               var4.addProperty("italic", ((ChatStyle)var1).italic);
+             }
+ 
+-            if(var1.underlined != null) {
+-               var4.addProperty("underlined", var1.underlined);
++            if(((ChatStyle)var1).underlined != null) {
++               var4.addProperty("underlined", ((ChatStyle)var1).underlined);
+             }
+ 
+-            if(var1.strikethrough != null) {
+-               var4.addProperty("strikethrough", var1.strikethrough);
++            if(((ChatStyle)var1).strikethrough != null) {
++               var4.addProperty("strikethrough", ((ChatStyle)var1).strikethrough);
+             }
+ 
+-            if(var1.obfuscated != null) {
+-               var4.addProperty("obfuscated", var1.obfuscated);
++            if(((ChatStyle)var1).obfuscated != null) {
++               var4.addProperty("obfuscated", ((ChatStyle)var1).obfuscated);
+             }
+ 
+-            if(var1.color != null) {
+-               var4.add("color", var3.serialize(var1.color));
++            if(((ChatStyle)var1).color != null) {
++               var4.add("color", var3.serialize(((ChatStyle)var1).color));
+             }
+ 
+-            if(var1.insertion != null) {
+-               var4.add("insertion", var3.serialize(var1.insertion));
++            if(((ChatStyle)var1).insertion != null) {
++               var4.add("insertion", var3.serialize(((ChatStyle)var1).insertion));
+             }
+ 
+             JsonObject var5;
+-            if(var1.chatClickEvent != null) {
++            if(((ChatStyle)var1).chatClickEvent != null) {
+                var5 = new JsonObject();
+-               var5.addProperty("action", var1.chatClickEvent.getAction().getCanonicalName());
+-               var5.addProperty("value", var1.chatClickEvent.getValue());
++               var5.addProperty("action", ((ChatStyle)var1).chatClickEvent.getAction().getCanonicalName());
++               var5.addProperty("value", ((ChatStyle)var1).chatClickEvent.getValue());
+                var4.add("clickEvent", var5);
+             }
+ 
+-            if(var1.chatHoverEvent != null) {
++            if(((ChatStyle)var1).chatHoverEvent != null) {
+                var5 = new JsonObject();
+-               var5.addProperty("action", var1.chatHoverEvent.getAction().getCanonicalName());
+-               var5.add("value", var3.serialize(var1.chatHoverEvent.getValue()));
++               var5.addProperty("action", ((ChatStyle)var1).chatHoverEvent.getAction().getCanonicalName());
++               var5.add("value", var3.serialize(((ChatStyle)var1).chatHoverEvent.getValue()));
+                var4.add("hoverEvent", var5);
+             }
+ 
+             return var4;
+          }
+       }
+-
+-      // $FF: synthetic method
+-      public JsonElement serialize(Object var1, Type var2, JsonSerializationContext var3) {
+-         return this.serialize((ChatStyle)var1, var2, var3);
+-      }
+-
+-      // $FF: synthetic method
+-      public Object deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) {
+-         return this.deserialize(var1, var2, var3);
+-      }
+    }
+ }

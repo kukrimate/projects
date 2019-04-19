@@ -1,0 +1,12 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\item\ItemBlock.java	2014-11-28 15:10:52.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\item\ItemBlock.java	2014-11-28 14:55:04.795311000 +0100
+@@ -97,9 +97,4 @@
+    public Block getBlock() {
+       return this.block;
+    }
+-
+-   // $FF: synthetic method
+-   public Item setUnlocalizedName(String var1) {
+-      return this.setUnlocalizedName(var1);
+-   }
+ }

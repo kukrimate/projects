@@ -1,0 +1,35 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\tileentity\TileEntity.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\tileentity\TileEntity.java	2014-11-28 14:55:04.885311700 +0100
+@@ -173,10 +173,6 @@
+          public String call() {
+             return (String)TileEntity.classToNameMap.get(TileEntity.this.getClass()) + " // " + TileEntity.this.getClass().getCanonicalName();
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       if(this.worldObj != null) {
+          CrashReportCategory.addBlockInfo(var1, this.pos, this.getBlockType(), this.getBlockMetadata());
+@@ -190,10 +186,6 @@
+                   return "ID #" + var1;
+                }
+             }
+-            // $FF: synthetic method
+-            public Object call() {
+-               return this.call();
+-            }
+          });
+          var1.addCrashSectionCallable("Actual block data value", new Callable() {
+             public String call() {
+@@ -206,10 +198,6 @@
+                   return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[]{Integer.valueOf(var2), var3});
+                }
+             }
+-            // $FF: synthetic method
+-            public Object call() {
+-               return this.call();
+-            }
+          });
+       }
+    }

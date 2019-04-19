@@ -1,0 +1,33 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\crash\CrashReportCategory.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\crash\CrashReportCategory.java	2014-11-28 14:55:04.765311000 +0100
+@@ -180,10 +180,6 @@
+                return "ID #" + var4;
+             }
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var0.addCrashSectionCallable("Block data value", new Callable() {
+          public String call() {
+@@ -194,19 +190,11 @@
+                return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[]{Integer.valueOf(var3), var1});
+             }
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var0.addCrashSectionCallable("Block location", new Callable() {
+          public String call() {
+             return CrashReportCategory.getCoordinateInfo(var1);
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+    }
+ 

@@ -1,0 +1,17 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\Packet.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\Packet.java	2014-11-28 14:55:04.835311100 +0100
+@@ -1,11 +1,13 @@
+ package net.minecraft.network;
+ 
++import java.io.IOException;
++
+ import net.minecraft.network.INetHandler;
+ import net.minecraft.network.PacketBuffer;
+ 
+ public interface Packet {
+ 
+-   void readPacketData(PacketBuffer var1);
++   void readPacketData(PacketBuffer var1) throws IOException;
+ 
+    void writePacketData(PacketBuffer var1);
+ 

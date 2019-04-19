@@ -1,0 +1,21 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\play\server\S0CPacketSpawnPlayer.java	2014-11-28 15:10:56.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\play\server\S0CPacketSpawnPlayer.java	2014-11-28 14:55:04.845311100 +0100
+@@ -1,7 +1,9 @@
+ package net.minecraft.network.play.server;
+ 
++import java.io.IOException;
+ import java.util.List;
+ import java.util.UUID;
++
+ import net.minecraft.entity.DataWatcher;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.item.Item;
+@@ -41,7 +43,7 @@
+       this.field_148960_i = var1.getDataWatcher();
+    }
+ 
+-   public void readPacketData(PacketBuffer var1) {
++   public void readPacketData(PacketBuffer var1) throws IOException {
+       this.field_148957_a = var1.readVarIntFromBuffer();
+       this.field_179820_b = var1.readUuid();
+       this.field_148956_c = var1.readInt();

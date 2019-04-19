@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\ChatComponentProcessor.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\ChatComponentProcessor.java	2014-11-28 14:55:04.889312000 +0100
+@@ -15,7 +15,7 @@
+ 
+ public class ChatComponentProcessor {
+ 
+-   public static IChatComponent func_179985_a(ICommandSender var0, IChatComponent var1, Entity var2) {
++   public static IChatComponent func_179985_a(ICommandSender var0, IChatComponent var1, Entity var2) throws EntityNotFoundException {
+       Object var3 = null;
+       if(var1 instanceof ChatComponentScore) {
+          ChatComponentScore var4 = (ChatComponentScore)var1;

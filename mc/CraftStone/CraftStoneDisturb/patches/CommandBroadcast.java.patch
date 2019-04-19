@@ -1,0 +1,30 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandBroadcast.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandBroadcast.java	2014-12-02 18:26:44.887586300 +0100
+@@ -1,8 +1,10 @@
+ package net.minecraft.command.server;
+ 
+ import java.util.List;
++
+ import net.minecraft.command.CommandBase;
+ import net.minecraft.command.ICommandSender;
++import net.minecraft.command.PlayerNotFoundException;
+ import net.minecraft.command.WrongUsageException;
+ import net.minecraft.server.MinecraftServer;
+ import net.minecraft.util.BlockPos;
+@@ -15,15 +17,11 @@
+       return "say";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 1;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.say.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, PlayerNotFoundException {
+       if(var2.length > 0 && var2[0].length() > 0) {
+          IChatComponent var3 = getChatComponentFromNthArg(var1, var2, 0, true);
+          MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentTranslation("chat.type.announcement", new Object[]{var1.getDisplayName(), var3}));

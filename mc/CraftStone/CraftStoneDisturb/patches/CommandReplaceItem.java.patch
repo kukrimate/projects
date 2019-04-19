@@ -1,0 +1,28 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\common\CommandReplaceItem.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\common\CommandReplaceItem.java	2014-12-02 18:24:24.371153800 +0100
+@@ -32,15 +32,11 @@
+       return "replaceitem";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.replaceitem.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 1) {
+          throw new WrongUsageException("commands.replaceitem.usage", new Object[0]);
+       } else {
+@@ -136,7 +132,7 @@
+       }
+    }
+ 
+-   private int func_175783_e(String var1) {
++   private int func_175783_e(String var1) throws CommandException {
+       if(!field_175785_a.containsKey(var1)) {
+          throw new CommandException("commands.generic.parameter.invalid", new Object[]{var1});
+       } else {

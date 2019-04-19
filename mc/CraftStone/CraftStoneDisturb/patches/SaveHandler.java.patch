@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\storage\SaveHandler.java	2014-11-28 15:11:16.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\storage\SaveHandler.java	2014-11-28 14:55:04.923313900 +0100
+@@ -64,7 +64,7 @@
+       return this.worldDirectory;
+    }
+ 
+-   public void checkSessionLock() {
++   public void checkSessionLock() throws MinecraftException {
+       try {
+          File var1 = new File(this.worldDirectory, "session.lock");
+          DataInputStream var2 = new DataInputStream(new FileInputStream(var1));

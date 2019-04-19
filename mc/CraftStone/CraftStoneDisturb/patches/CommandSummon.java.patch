@@ -1,0 +1,25 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandSummon.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandSummon.java	2014-12-02 18:27:38.337758700 +0100
+@@ -24,20 +24,16 @@
+       return "summon";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.summon.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 1) {
+          throw new WrongUsageException("commands.summon.usage", new Object[0]);
+       } else {
+          String var3 = var2[0];
+-         BlockPos var4 = var1.getPosition();
++         BlockPos var4 = var1.getVanillaPosition();
+          Vec3 var5 = var1.getPositionVector();
+          double var6 = var5.xCoord;
+          double var8 = var5.yCoord;

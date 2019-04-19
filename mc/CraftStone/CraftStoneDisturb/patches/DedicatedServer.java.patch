@@ -1,0 +1,167 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\dedicated\DedicatedServer.java	2014-11-28 15:11:00.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\dedicated\DedicatedServer.java	2014-12-04 19:19:30.773825400 +0100
+@@ -1,17 +1,24 @@
+ package net.minecraft.server.dedicated;
+ 
++import com.craftstone.stone.entity.OfflinePlayer;
++import com.craftstone.stone.entity.Player;
++import com.craftstone.stone.plugin.PluginManager;
++import com.google.common.base.Optional;
+ import com.google.common.collect.Lists;
++
+ import java.io.BufferedReader;
+ import java.io.File;
+ import java.io.IOException;
+ import java.io.InputStreamReader;
+ import java.net.InetAddress;
+ import java.net.Proxy;
++import java.net.UnknownHostException;
+ import java.util.Collections;
+ import java.util.List;
+ import java.util.Random;
+ import java.util.concurrent.Callable;
+ import java.util.concurrent.TimeUnit;
++
+ import net.minecraft.command.ICommandSender;
+ import net.minecraft.command.ServerCommand;
+ import net.minecraft.crash.CrashReport;
+@@ -35,6 +42,7 @@
+ import net.minecraft.world.World;
+ import net.minecraft.world.WorldSettings;
+ import net.minecraft.world.WorldType;
++
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+@@ -49,10 +57,14 @@
+    private boolean canSpawnStructures;
+    private WorldSettings.GameType gameType;
+    private boolean guiIsEnabled;
++   
++   //CraftStone start
++   private PropertyManager stoneConfig;
++   //CraftStone end
+ 
+ 
+    public DedicatedServer(File var1) {
+-      super(var1, Proxy.NO_PROXY, USER_CACHE_FILE);
++      super(var1, Proxy.NO_PROXY);
+       Thread var10001 = new Thread("Server Infinisleeper") {
+          {
+             this.setDaemon(true);
+@@ -72,7 +84,7 @@
+       };
+    }
+ 
+-   protected boolean startServer() {
++   protected boolean startServer() throws IOException {
+       Thread var1 = new Thread("Server console handler") {
+          public void run() {
+             BufferedReader var1 = new BufferedReader(new InputStreamReader(System.in));
+@@ -90,14 +102,17 @@
+       };
+       var1.setDaemon(true);
+       var1.start();
+-      logger.info("Starting minecraft server version 1.8");
++      logger.info("Starting minecraft server version 1.8 (Implementing Stone API Version: " + this.getAPIVersion() + ")"); //CraftStone
+       if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
+-         logger.warn("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
++         logger.warn("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar <server jar>.jar\"");
+       }
+ 
+       logger.info("Loading properties");
+-      this.settings = new PropertyManager(new File("server.properties"));
+-      this.eula = new ServerEula(new File("eula.txt"));
++      this.settings = new PropertyManager(CONFIG_FILE);
++      this.eula = new ServerEula(EULA_FILE);
++      //CraftStone start
++      this.stoneConfig = new PropertyManager(STONE_CONFIG_FILE);
++      //CraftStone end
+       if(!this.eula.hasAcceptedEULA()) {
+          logger.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
+          this.eula.createEULAFile();
+@@ -136,6 +151,10 @@
+          if(this.getServerPort() < 0) {
+             this.setServerPort(this.settings.getIntProperty("server-port", 25565));
+          }
++         
++         //CraftStone start
++         loadStoneSettings();
++         //CraftStone end
+ 
+          logger.info("Generating keypair");
+          this.setKeyPair(CryptManager.generateKeyPair());
+@@ -192,7 +211,7 @@
+ 
+             this.isAnnouncingPlayerAchievements();
+             this.isCommandBlockEnabled();
+-            this.getOpPermissionLevel();
++            //this.getOpPermissionLevel();
+             this.isSnooperEnabled();
+             this.getNetworkCompressionTreshold();
+             this.setBuildLimit(this.settings.getIntProperty("max-build-height", 256));
+@@ -228,6 +247,12 @@
+       }
+    }
+ 
++   //CraftStone
++   private void loadStoneSettings() {
++	   super.allowEnd = this.stoneConfig.getBooleanProperty("allow-end", true);
++	   super.maxWorldSize = this.stoneConfig.getIntProperty("max-world-size", 29999984);
++   }
++   
+    public void setGameType(WorldSettings.GameType var1) {
+       super.setGameType(var1);
+       this.gameType = var1;
+@@ -269,19 +294,11 @@
+             String var1 = DedicatedServer.this.getServerModName();
+             return !var1.equals("vanilla")?"Definitely; Server brand changed to \'" + var1 + "\'":"Unknown (can\'t tell)";
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var1.getCategory().addCrashSectionCallable("Type", new Callable() {
+          public String call() {
+             return "Dedicated Server (map_server.txt)";
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       return var1;
+    }
+@@ -290,7 +307,7 @@
+       System.exit(0);
+    }
+ 
+-   protected void updateTimeLightAndEntities() {
++   public void updateTimeLightAndEntities() {
+       super.updateTimeLightAndEntities();
+       this.executePendingCommands();
+    }
+@@ -397,9 +414,9 @@
+       }
+    }
+ 
+-   public int getOpPermissionLevel() {
++   /*public int getOpPermissionLevel() {
+       return this.settings.getIntProperty("op-permission-level", 4);
+-   }
++   }*/
+ 
+    public void setPlayerIdleTimeout(int var1) {
+       super.setPlayerIdleTimeout(var1);
+@@ -502,5 +519,9 @@
+    public ServerConfigurationManager getConfigurationManager() {
+       return this.func_180508_aN();
+    }
+-
++   
++   @Override
++   public String getAdress() {
++	   return this.getHostname();
++   }
+ }

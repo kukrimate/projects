@@ -1,0 +1,21 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\storage\ISaveHandler.java	2014-11-28 15:11:16.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\storage\ISaveHandler.java	2014-11-28 14:55:04.921313800 +0100
+@@ -1,7 +1,9 @@
+ package net.minecraft.world.storage;
+ 
+ import java.io.File;
++
+ import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.world.MinecraftException;
+ import net.minecraft.world.WorldProvider;
+ import net.minecraft.world.chunk.storage.IChunkLoader;
+ import net.minecraft.world.storage.IPlayerFileData;
+@@ -11,7 +13,7 @@
+ 
+    WorldInfo loadWorldInfo();
+ 
+-   void checkSessionLock();
++   void checkSessionLock() throws MinecraftException;
+ 
+    IChunkLoader getChunkLoader(WorldProvider var1);
+ 

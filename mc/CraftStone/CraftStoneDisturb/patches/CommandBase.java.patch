@@ -1,0 +1,257 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandBase.java	2014-11-28 15:10:36.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandBase.java	2014-12-02 21:13:38.235430800 +0100
+@@ -7,7 +7,6 @@
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collection;
+-import java.util.Collections;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.UUID;
+@@ -32,25 +31,54 @@
+ public abstract class CommandBase implements ICommand {
+ 
+    private static IAdminCommand theAdmin;
++   private String permission = "minecraft." + this.getCommandName();
++   private String permissionMessage = "You don't have permssion to use this command.";
++   private String description = "vanilla command";
+ 
+-
+-   public int getRequiredPermissionLevel() {
++   /*public int getRequiredPermissionLevel() { //CraftStone no more perm level
+       return 4;
++   }*/
++   
++   public CommandBase() {}
++
++   public CommandBase(String permission, String permissionMessage, String description) {
++	   this.permission = permission;
++	   this.permissionMessage = permissionMessage;
++	   this.description = description;
++   }
++   
++   @Override
++   public String getPermissionMessage() { //CraftStone
++	   return this.permissionMessage;
++   }
++   
++   @Override
++   public String getPermission() { //CraftStone
++	   return this.permission;
++   }
++   
++   @Override
++   public String getDescription() {
++	   return this.description;
++   }
++   
++   public boolean isVanillaCommand() { //CraftStone
++	   return true;
+    }
+ 
+-   public List getCommandAliases() {
+-      return Collections.emptyList();
++   public String[] getCommandAliases() {
++      return new String[] {};
+    }
+ 
+    public boolean canCommandSenderUseCommand(ICommandSender var1) {
+-      return var1.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
++      return var1.canCommandSenderUseCommand(permission);
+    }
+ 
+    public List addTabCompletionOptions(ICommandSender var1, String[] var2, BlockPos var3) {
+       return null;
+    }
+ 
+-   public static int parseInt(String var0) {
++   public static int parseInt(String var0) throws NumberInvalidException {
+       try {
+          return Integer.parseInt(var0);
+       } catch (NumberFormatException var2) {
+@@ -58,11 +86,11 @@
+       }
+    }
+ 
+-   public static int parseInt(String var0, int var1) {
++   public static int parseInt(String var0, int var1) throws NumberInvalidException {
+       return parseInt(var0, var1, Integer.MAX_VALUE);
+    }
+ 
+-   public static int parseInt(String var0, int var1, int var2) {
++   public static int parseInt(String var0, int var1, int var2) throws NumberInvalidException {
+       int var3 = parseInt(var0);
+       if(var3 < var1) {
+          throw new NumberInvalidException("commands.generic.num.tooSmall", new Object[]{Integer.valueOf(var3), Integer.valueOf(var1)});
+@@ -73,7 +101,7 @@
+       }
+    }
+ 
+-   public static long parseLong(String var0) {
++   public static long parseLong(String var0) throws NumberInvalidException {
+       try {
+          return Long.parseLong(var0);
+       } catch (NumberFormatException var2) {
+@@ -81,7 +109,7 @@
+       }
+    }
+ 
+-   public static long parseLong(String var0, long var1, long var3) {
++   public static long parseLong(String var0, long var1, long var3) throws NumberInvalidException {
+       long var5 = parseLong(var0);
+       if(var5 < var1) {
+          throw new NumberInvalidException("commands.generic.num.tooSmall", new Object[]{Long.valueOf(var5), Long.valueOf(var1)});
+@@ -92,12 +120,12 @@
+       }
+    }
+ 
+-   public static BlockPos func_175757_a(ICommandSender var0, String[] var1, int var2, boolean var3) {
+-      BlockPos var4 = var0.getPosition();
++   public static BlockPos func_175757_a(ICommandSender var0, String[] var1, int var2, boolean var3) throws NumberInvalidException {
++      BlockPos var4 = var0.getVanillaPosition();
+       return new BlockPos(func_175769_b((double)var4.getX(), var1[var2], -30000000, 30000000, var3), func_175769_b((double)var4.getY(), var1[var2 + 1], 0, 256, false), func_175769_b((double)var4.getZ(), var1[var2 + 2], -30000000, 30000000, var3));
+    }
+ 
+-   public static double parseDouble(String var0) {
++   public static double parseDouble(String var0) throws NumberInvalidException {
+       try {
+          double var1 = Double.parseDouble(var0);
+          if(!Doubles.isFinite(var1)) {
+@@ -110,11 +138,11 @@
+       }
+    }
+ 
+-   public static double parseDouble(String var0, double var1) {
++   public static double parseDouble(String var0, double var1) throws NumberInvalidException {
+       return parseDouble(var0, var1, Double.MAX_VALUE);
+    }
+ 
+-   public static double parseDouble(String var0, double var1, double var3) {
++   public static double parseDouble(String var0, double var1, double var3) throws NumberInvalidException {
+       double var5 = parseDouble(var0);
+       if(var5 < var1) {
+          throw new NumberInvalidException("commands.generic.double.tooSmall", new Object[]{Double.valueOf(var5), Double.valueOf(var1)});
+@@ -125,7 +153,7 @@
+       }
+    }
+ 
+-   public static boolean parseBoolean(String var0) {
++   public static boolean parseBoolean(String var0) throws CommandException {
+       if(!var0.equals("true") && !var0.equals("1")) {
+          if(!var0.equals("false") && !var0.equals("0")) {
+             throw new CommandException("commands.generic.boolean.invalid", new Object[]{var0});
+@@ -137,7 +165,7 @@
+       }
+    }
+ 
+-   public static EntityPlayerMP getCommandSenderAsPlayer(ICommandSender var0) {
++   public static EntityPlayerMP getCommandSenderAsPlayer(ICommandSender var0) throws PlayerNotFoundException {
+       if(var0 instanceof EntityPlayerMP) {
+          return (EntityPlayerMP)var0;
+       } else {
+@@ -145,7 +173,7 @@
+       }
+    }
+ 
+-   public static EntityPlayerMP getPlayer(ICommandSender var0, String var1) {
++   public static EntityPlayerMP getPlayer(ICommandSender var0, String var1) throws PlayerNotFoundException {
+       EntityPlayerMP var2 = PlayerSelector.matchOnePlayer(var0, var1);
+       if(var2 == null) {
+          try {
+@@ -166,11 +194,11 @@
+       }
+    }
+ 
+-   public static Entity func_175768_b(ICommandSender var0, String var1) {
++   public static Entity func_175768_b(ICommandSender var0, String var1) throws EntityNotFoundException {
+       return func_175759_a(var0, var1, Entity.class);
+    }
+ 
+-   public static Entity func_175759_a(ICommandSender var0, String var1, Class var2) {
++   public static Entity func_175759_a(ICommandSender var0, String var1, Class var2) throws EntityNotFoundException {
+       Object var3 = PlayerSelector.func_179652_a(var0, var1, var2);
+       MinecraftServer var4 = MinecraftServer.getServer();
+       if(var3 == null) {
+@@ -196,11 +224,11 @@
+       }
+    }
+ 
+-   public static List func_175763_c(ICommandSender var0, String var1) {
++   public static List func_175763_c(ICommandSender var0, String var1) throws EntityNotFoundException {
+       return (List)(PlayerSelector.hasArguments(var1)?PlayerSelector.func_179656_b(var0, var1, Entity.class):Lists.newArrayList(new Entity[]{func_175768_b(var0, var1)}));
+    }
+ 
+-   public static String getPlayerName(ICommandSender var0, String var1) {
++   public static String getPlayerName(ICommandSender var0, String var1) throws PlayerNotFoundException {
+       try {
+          return getPlayer(var0, var1).getName();
+       } catch (PlayerNotFoundException var3) {
+@@ -212,7 +240,7 @@
+       }
+    }
+ 
+-   public static String func_175758_e(ICommandSender var0, String var1) {
++   public static String func_175758_e(ICommandSender var0, String var1) throws EntityNotFoundException {
+       try {
+          return getPlayer(var0, var1).getName();
+       } catch (PlayerNotFoundException var5) {
+@@ -228,11 +256,11 @@
+       }
+    }
+ 
+-   public static IChatComponent getChatComponentFromNthArg(ICommandSender var0, String[] var1, int var2) {
++   public static IChatComponent getChatComponentFromNthArg(ICommandSender var0, String[] var1, int var2) throws PlayerNotFoundException {
+       return getChatComponentFromNthArg(var0, var1, var2, false);
+    }
+ 
+-   public static IChatComponent getChatComponentFromNthArg(ICommandSender var0, String[] var1, int var2, boolean var3) {
++   public static IChatComponent getChatComponentFromNthArg(ICommandSender var0, String[] var1, int var2, boolean var3) throws PlayerNotFoundException {
+       ChatComponentText var4 = new ChatComponentText("");
+ 
+       for(int var5 = var2; var5 < var1.length; ++var5) {
+@@ -273,11 +301,11 @@
+       return var2.toString();
+    }
+ 
+-   public static CommandBase.CoordinateArg func_175770_a(double var0, String var2, boolean var3) {
++   public static CommandBase.CoordinateArg func_175770_a(double var0, String var2, boolean var3) throws NumberInvalidException {
+       return func_175767_a(var0, var2, -30000000, 30000000, var3);
+    }
+ 
+-   public static CommandBase.CoordinateArg func_175767_a(double var0, String var2, int var3, int var4, boolean var5) {
++   public static CommandBase.CoordinateArg func_175767_a(double var0, String var2, int var3, int var4, boolean var5) throws NumberInvalidException {
+       boolean var6 = var2.startsWith("~");
+       if(var6 && Double.isNaN(var0)) {
+          throw new NumberInvalidException("commands.generic.num.invalid", new Object[]{Double.valueOf(var0)});
+@@ -309,11 +337,11 @@
+       }
+    }
+ 
+-   public static double func_175761_b(double var0, String var2, boolean var3) {
++   public static double func_175761_b(double var0, String var2, boolean var3) throws NumberInvalidException {
+       return func_175769_b(var0, var2, -30000000, 30000000, var3);
+    }
+ 
+-   public static double func_175769_b(double var0, String var2, int var3, int var4, boolean var5) {
++   public static double func_175769_b(double var0, String var2, int var3, int var4, boolean var5) throws NumberInvalidException {
+       boolean var6 = var2.startsWith("~");
+       if(var6 && Double.isNaN(var0)) {
+          throw new NumberInvalidException("commands.generic.num.invalid", new Object[]{Double.valueOf(var0)});
+@@ -345,7 +373,7 @@
+       }
+    }
+ 
+-   public static Item getItemByText(ICommandSender var0, String var1) {
++   public static Item getItemByText(ICommandSender var0, String var1) throws NumberInvalidException {
+       ResourceLocation var2 = new ResourceLocation(var1);
+       Item var3 = (Item)Item.itemRegistry.getObject(var2);
+       if(var3 == null) {
+@@ -355,7 +383,7 @@
+       }
+    }
+ 
+-   public static Block getBlockByText(ICommandSender var0, String var1) {
++   public static Block getBlockByText(ICommandSender var0, String var1) throws NumberInvalidException {
+       ResourceLocation var2 = new ResourceLocation(var1);
+       if(!Block.blockRegistry.containsKey(var2)) {
+          throw new NumberInvalidException("commands.give.notFound", new Object[]{var2});

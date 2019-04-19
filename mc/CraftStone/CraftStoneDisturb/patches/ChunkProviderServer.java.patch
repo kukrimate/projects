@@ -1,0 +1,11 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\world\gen\ChunkProviderServer.java	2014-11-28 15:11:08.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\world\gen\ChunkProviderServer.java	2014-11-28 17:51:47.019591400 +0100
+@@ -33,7 +33,7 @@
+    private IChunkProvider serverChunkGenerator;
+    private IChunkLoader chunkLoader;
+    public boolean chunkLoadOverride = true;
+-   private LongHashMap id2ChunkMap = new LongHashMap();
++   public LongHashMap id2ChunkMap = new LongHashMap(); //CraftStone makePublic
+    private List loadedChunks = Lists.newArrayList();
+    private WorldServer worldObj;
+ 

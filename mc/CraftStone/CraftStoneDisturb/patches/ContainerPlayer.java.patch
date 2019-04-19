@@ -1,0 +1,26 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\inventory\ContainerPlayer.java	2014-11-28 15:10:50.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\inventory\ContainerPlayer.java	2014-11-28 14:55:04.785311000 +0100
+@@ -28,7 +28,7 @@
+       this.thePlayer = var3;
+       this.addSlotToContainer(new SlotCrafting(var1.player, this.craftMatrix, this.craftResult, 0, 144, 36));
+ 
+-      final int var4;
++      int var4;
+       int var5;
+       for(var4 = 0; var4 < 2; ++var4) {
+          for(var5 = 0; var5 < 2; ++var5) {
+@@ -37,12 +37,13 @@
+       }
+ 
+       for(var4 = 0; var4 < 4; ++var4) {
++    	  final int finalVar4 = var4;
+          this.addSlotToContainer(new Slot(var1, var1.getSizeInventory() - 1 - var4, 8, 8 + var4 * 18) {
+             public int getSlotStackLimit() {
+                return 1;
+             }
+             public boolean isItemValid(ItemStack var1) {
+-               return var1 == null?false:(var1.getItem() instanceof ItemArmor?((ItemArmor)var1.getItem()).armorType == var4:(var1.getItem() != Item.getItemFromBlock(Blocks.pumpkin) && var1.getItem() != Items.skull?false:var4 == 0));
++               return var1 == null?false:(var1.getItem() instanceof ItemArmor?((ItemArmor)var1.getItem()).armorType == finalVar4:(var1.getItem() != Item.getItemFromBlock(Blocks.pumpkin) && var1.getItem() != Items.skull?false:finalVar4 == 0));
+             }
+          });
+       }

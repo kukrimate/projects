@@ -1,0 +1,28 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\MessageDeserializer.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\MessageDeserializer.java	2014-11-28 14:55:04.903312800 +0100
+@@ -3,13 +3,16 @@
+ import io.netty.buffer.ByteBuf;
+ import io.netty.channel.ChannelHandlerContext;
+ import io.netty.handler.codec.ByteToMessageDecoder;
++
+ import java.io.IOException;
+ import java.util.List;
++
+ import net.minecraft.network.EnumConnectionState;
+ import net.minecraft.network.EnumPacketDirection;
+ import net.minecraft.network.NetworkManager;
+ import net.minecraft.network.Packet;
+ import net.minecraft.network.PacketBuffer;
++
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ import org.apache.logging.log4j.Marker;
+@@ -26,7 +29,7 @@
+       this.direction = var1;
+    }
+ 
+-   protected void decode(ChannelHandlerContext var1, ByteBuf var2, List var3) {
++   protected void decode(ChannelHandlerContext var1, ByteBuf var2, List var3) throws InstantiationException, IllegalAccessException, IOException {
+       if(var2.readableBytes() != 0) {
+          PacketBuffer var4 = new PacketBuffer(var2);
+          int var5 = var4.readVarIntFromBuffer();

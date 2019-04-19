@@ -1,0 +1,168 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\rcon\RConThreadClient.java	2014-11-28 15:10:58.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\rcon\RConThreadClient.java	2014-12-04 20:38:01.829339400 +0100
+@@ -5,7 +5,6 @@
+ import java.io.DataOutputStream;
+ import java.io.IOException;
+ import java.net.Socket;
+-import java.net.SocketTimeoutException;
+ import net.minecraft.network.rcon.IServer;
+ import net.minecraft.network.rcon.RConThreadBase;
+ import net.minecraft.network.rcon.RConUtils;
+@@ -35,76 +34,75 @@
+       this.logInfo("Rcon connection from: " + var2.getInetAddress());
+    }
+ 
+-   public void run() {
+-      while(true) {
+-         try {
+-            if(!this.running) {
+-               break;
+-            }
+-
+-            BufferedInputStream var1 = new BufferedInputStream(this.clientSocket.getInputStream());
+-            int var2 = var1.read(this.buffer, 0, 1460);
+-            if(10 > var2) {
+-               return;
+-            }
+-
+-            byte var3 = 0;
+-            int var4 = RConUtils.getBytesAsLEInt(this.buffer, 0, var2);
+-            if(var4 == var2 - 4) {
+-               int var21 = var3 + 4;
+-               int var5 = RConUtils.getBytesAsLEInt(this.buffer, var21, var2);
+-               var21 += 4;
+-               int var6 = RConUtils.getRemainingBytesAsLEInt(this.buffer, var21);
+-               var21 += 4;
+-               switch(var6) {
+-               case 2:
+-                  if(this.loggedIn) {
+-                     String var8 = RConUtils.getBytesAsString(this.buffer, var21, var2);
+-
+-                     try {
+-                        this.sendMultipacketResponse(var5, this.server.handleRConCommand(var8));
+-                     } catch (Exception var16) {
+-                        this.sendMultipacketResponse(var5, "Error executing: " + var8 + " (" + var16.getMessage() + ")");
+-                     }
+-                     continue;
+-                  }
+-
+-                  this.sendLoginFailedResponse();
+-                  continue;
+-               case 3:
+-                  String var7 = RConUtils.getBytesAsString(this.buffer, var21, var2);
+-                  int var10000 = var21 + var7.length();
+-                  if(0 != var7.length() && var7.equals(this.rconPassword)) {
+-                     this.loggedIn = true;
+-                     this.sendResponse(var5, 2, "");
+-                     continue;
+-                  }
+-
+-                  this.loggedIn = false;
+-                  this.sendLoginFailedResponse();
+-                  continue;
+-               default:
+-                  this.sendMultipacketResponse(var5, String.format("Unknown request %s", new Object[]{Integer.toHexString(var6)}));
+-                  continue;
+-               }
+-            }
+-         } catch (SocketTimeoutException var17) {
+-            break;
+-         } catch (IOException var18) {
+-            break;
+-         } catch (Exception var19) {
+-            LOGGER.error("Exception whilst parsing RCON input", var19);
+-            break;
+-         } finally {
+-            this.closeSocket();
+-         }
+-
+-         return;
+-      }
+-
++   public void run() { //CraftStone fixed buggy RCon
++	   BufferedInputStream var1 = null;
++		try {
++			var1 = new BufferedInputStream(this.clientSocket.getInputStream());
++		} catch (IOException e) {
++			e.printStackTrace();
++		}
++	   
++	      while(true) {
++	    	int var2 = 0;
++			try {
++				var2 = var1.read(this.buffer, 0, 1460);
++	          
++	          if(10 <= var2) {
++	              byte var3 = 0;
++	              int var4 = RConUtils.getBytesAsLEInt(this.buffer, 0, var2);
++	              if(var4 != var2 - 4) {
++	                 return;
++	              }
++	
++	              int var21 = var3 + 4;
++	              int var5 = RConUtils.getBytesAsLEInt(this.buffer, var21, var2);
++	              var21 += 4;
++	              int var6 = RConUtils.getRemainingBytesAsLEInt(this.buffer, var21);
++	              var21 += 4;
++	              
++	              if (var6 == 3)
++	              {
++	                  String var7 = RConUtils.getBytesAsString(this.buffer, var21, var2);
++	                  if(0 != var7.length() && var7.equals(this.rconPassword)) {
++	                	LOGGER.info("Successfull RCon login!");
++	                  	this.loggedIn = true;
++	                      this.sendResponse(var5, 2, "");
++	                      continue;
++	                  } else {
++	                	  LOGGER.info("Faild RCon login!");
++	                  	this.loggedIn = false;
++	                      this.sendLoginFailedResponse();
++	                      continue;
++	                  }
++	              } else if (var6 == 2) {
++	            	  LOGGER.info("RCon command executed!");
++	              	if (!this.loggedIn) {
++	              		this.sendLoginFailedResponse();
++	              		return;
++	              	} else {
++	                      String var8 = RConUtils.getBytesAsString(this.buffer, var21, var2);
++	
++	                      try {
++	                         this.sendMultipacketResponse(var5, this.server.handleRConCommand(var8));
++	                      } catch (Exception var16) {
++	                         this.sendMultipacketResponse(var5, "Error executing: " + var8 + " (" + var16.getMessage() + ")");
++	                      }
++	                      continue;
++	              	}
++	              } else {
++	              	continue;
++	              }
++	          }
++	          
++			} catch (IOException e) {
++				this.running = false;
++				this.closeSocket();
++				return;
++			}
++	   }
+    }
+ 
+-   private void sendResponse(int var1, int var2, String var3) {
++   private void sendResponse(int var1, int var2, String var3) throws IOException {
+       ByteArrayOutputStream var4 = new ByteArrayOutputStream(1248);
+       DataOutputStream var5 = new DataOutputStream(var4);
+       byte[] var6 = var3.getBytes("UTF-8");
+@@ -117,11 +115,11 @@
+       this.clientSocket.getOutputStream().write(var4.toByteArray());
+    }
+ 
+-   private void sendLoginFailedResponse() {
++   private void sendLoginFailedResponse() throws IOException {
+       this.sendResponse(-1, 2, "");
+    }
+ 
+-   private void sendMultipacketResponse(int var1, String var2) {
++   private void sendMultipacketResponse(int var1, String var2) throws IOException {
+       int var3 = var2.length();
+ 
+       do {

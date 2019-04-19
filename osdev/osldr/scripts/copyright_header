@@ -1,0 +1,99 @@
+#!/usr/bin/python3
+import argparse
+import re
+
+header_template = '''Copyright (c) 2018, Máté Kukri
+This file is part of osldr and is distributed under the ISC license.
+Check license.txt for more details.'''
+
+def strip_header(s, strip_extra):
+	return re.sub('[ \n' + strip_extra + ']+', ' ', s).strip()
+
+def check_c(f):
+	old_contents = f.read()
+
+	header_start = old_contents.find('/*')
+	header_end   = old_contents.find('*/')
+
+	if header_start == -1 or header_end == -1:
+		# Missing header
+		return False
+	else:
+		template_stripped = strip_header(header_template, '')
+		file_stripped = strip_header(old_contents[header_start:header_end], '/*')
+
+		if template_stripped != file_stripped:
+			# Invalid header
+			return False
+
+	# Correct header found
+	return True
+
+def update_c(f):
+	old_contents = f.read()
+
+	f.seek(0)
+	f.write('/*\n')
+	for line in header_template.split('\n'):
+		f.write(' * ' + line + '\n')
+	f.write(' */\n')
+	f.write(old_contents)
+
+def check_nasm(f):
+	old_contents = f.read()
+
+	arr = []
+	for line in old_contents.split('\n'):
+		if len(line) == 0 or line[0] != ';':
+			break;
+		arr.append(line)
+	current_header = ''.join(arr)
+
+	if len(current_header) == 0:
+		# Missing header
+		return False
+	else:
+		template_stripped = strip_header(header_template, '')
+		file_stripped = strip_header(current_header, ';')
+		if template_stripped != file_stripped:
+			# Invalid header
+			return False
+
+	# Correct header found
+	return True
+
+def update_nasm(f):
+	old_contents = f.read()
+
+	f.seek(0)
+	for line in header_template.split('\n'):
+		f.write('; ' + line + '\n')
+	f.write('\n')
+	f.write(old_contents)
+
+def main(args):
+	with open(args.src_file, 'r+') as src_file:
+		if args.type == 'c':
+			if args.update:
+				update_c(src_file)
+			else:
+				if not check_c(src_file):
+					print('Invalid header in %s' %(args.src_file))
+					exit(1)
+		elif args.type == 'nasm':
+			if args.update:
+				update_nasm(src_file)
+				pass
+			else:
+				if not check_nasm(src_file):
+					print('Invalid header in %s' %(args.src_file))
+					exit(1)
+
+parser = argparse.ArgumentParser(description='Copyright header checker')
+parser.add_argument('-t', '--type', 
+	choices=['c', 'nasm'], required=True, help='Source file type')
+parser.add_argument('-u', '--update', action='store_true', help='Create a new header')
+parser.add_argument('src_file', help='Source code file')
+args = parser.parse_args()
+
+main(parser.parse_args())

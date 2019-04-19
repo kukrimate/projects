@@ -1,0 +1,22 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\EntityMinecartCommandBlock.java	2014-11-28 15:10:44.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\EntityMinecartCommandBlock.java	2014-12-02 18:22:37.697769000 +0100
+@@ -19,7 +19,7 @@
+          EntityMinecartCommandBlock.this.getDataWatcher().updateObject(23, this.getCustomName());
+          EntityMinecartCommandBlock.this.getDataWatcher().updateObject(24, IChatComponent.Serializer.componentToJson(this.getLastOutput()));
+       }
+-      public BlockPos getPosition() {
++      public BlockPos getVanillaPosition() {
+          return new BlockPos(EntityMinecartCommandBlock.this.posX, EntityMinecartCommandBlock.this.posY + 0.5D, EntityMinecartCommandBlock.this.posZ);
+       }
+       public Vec3 getPositionVector() {
+@@ -31,6 +31,10 @@
+       public Entity getCommandSenderEntity() {
+          return EntityMinecartCommandBlock.this;
+       }
++		@Override
++		public void sendMessage(String message) {
++			//CraftStone dummy method
++		}
+    };
+    private int field_145823_b = 0;
+ 

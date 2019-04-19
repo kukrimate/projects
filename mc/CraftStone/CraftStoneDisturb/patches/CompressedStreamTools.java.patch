@@ -1,0 +1,57 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\CompressedStreamTools.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\CompressedStreamTools.java	2014-11-28 14:55:04.795311000 +0100
+@@ -21,7 +21,7 @@
+ 
+ public class CompressedStreamTools {
+ 
+-   public static NBTTagCompound readCompressed(InputStream var0) {
++   public static NBTTagCompound readCompressed(InputStream var0) throws IOException {
+       DataInputStream var1 = new DataInputStream(new BufferedInputStream(new GZIPInputStream(var0)));
+ 
+       NBTTagCompound var2;
+@@ -34,7 +34,7 @@
+       return var2;
+    }
+ 
+-   public static void writeCompressed(NBTTagCompound var0, OutputStream var1) {
++   public static void writeCompressed(NBTTagCompound var0, OutputStream var1) throws IOException {
+       DataOutputStream var2 = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(var1)));
+ 
+       try {
+@@ -45,11 +45,11 @@
+ 
+    }
+ 
+-   public static NBTTagCompound read(DataInputStream var0) {
++   public static NBTTagCompound read(DataInputStream var0) throws IOException {
+       return func_152456_a(var0, NBTSizeTracker.INFINITE);
+    }
+ 
+-   public static NBTTagCompound func_152456_a(DataInput var0, NBTSizeTracker var1) {
++   public static NBTTagCompound func_152456_a(DataInput var0, NBTSizeTracker var1) throws IOException {
+       NBTBase var2 = func_152455_a(var0, 0, var1);
+       if(var2 instanceof NBTTagCompound) {
+          return (NBTTagCompound)var2;
+@@ -58,11 +58,11 @@
+       }
+    }
+ 
+-   public static void write(NBTTagCompound var0, DataOutput var1) {
++   public static void write(NBTTagCompound var0, DataOutput var1) throws IOException {
+       writeTag(var0, var1);
+    }
+ 
+-   private static void writeTag(NBTBase var0, DataOutput var1) {
++   private static void writeTag(NBTBase var0, DataOutput var1) throws IOException {
+       var1.writeByte(var0.getId());
+       if(var0.getId() != 0) {
+          var1.writeUTF("");
+@@ -70,7 +70,7 @@
+       }
+    }
+ 
+-   private static NBTBase func_152455_a(DataInput var0, int var1, NBTSizeTracker var2) {
++   private static NBTBase func_152455_a(DataInput var0, int var1, NBTSizeTracker var2) throws IOException {
+       byte var3 = var0.readByte();
+       if(var3 == 0) {
+          return new NBTTagEnd();

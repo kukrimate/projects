@@ -1,0 +1,13 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\player\InventoryPlayer.java	2014-11-28 15:10:50.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\player\InventoryPlayer.java	2014-11-28 14:55:04.785311000 +0100
+@@ -245,10 +245,6 @@
+                public String call() {
+                   return var1.getDisplayName();
+                }
+-               // $FF: synthetic method
+-               public Object call() {
+-                  return this.call();
+-               }
+             });
+             throw new ReportedException(var3);
+          }

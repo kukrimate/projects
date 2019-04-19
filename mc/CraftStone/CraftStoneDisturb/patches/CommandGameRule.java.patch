@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandGameRule.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandGameRule.java	2014-12-02 18:25:12.642288600 +0100
+@@ -19,15 +19,11 @@
+       return "gamerule";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.gamerule.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       GameRules var3 = this.getGameRules();
+       String var4 = var2.length > 0?var2[0]:"";
+       String var5 = var2.length > 1?func_180529_a(var2, 1):"";

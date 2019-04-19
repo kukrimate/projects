@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandTestFor.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandTestFor.java	2014-12-02 18:27:43.791769400 +0100
+@@ -19,15 +19,11 @@
+       return "testfor";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 2;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.testfor.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
+       if(var2.length < 1) {
+          throw new WrongUsageException("commands.testfor.usage", new Object[0]);
+       } else {

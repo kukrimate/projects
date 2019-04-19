@@ -1,0 +1,42 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\management\UserList.java	2014-11-28 15:11:00.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\management\UserList.java	2014-11-28 14:55:04.878311300 +0100
+@@ -12,9 +12,11 @@
+ import com.google.gson.JsonObject;
+ import com.google.gson.JsonSerializationContext;
+ import com.google.gson.JsonSerializer;
++
+ import java.io.BufferedReader;
+ import java.io.BufferedWriter;
+ import java.io.File;
++import java.io.FileNotFoundException;
+ import java.io.IOException;
+ import java.lang.reflect.ParameterizedType;
+ import java.lang.reflect.Type;
+@@ -23,7 +25,9 @@
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
++
+ import net.minecraft.server.management.UserListEntry;
++
+ import org.apache.commons.io.IOUtils;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+@@ -138,7 +142,7 @@
+       return this.values;
+    }
+ 
+-   public void writeChanges() {
++   public void writeChanges() throws IOException {
+       Collection var1 = this.values.values();
+       String var2 = this.gson.toJson(var1);
+       BufferedWriter var3 = null;
+@@ -152,7 +156,7 @@
+ 
+    }
+ 
+-   public void readSavedFile() {
++   public void readSavedFile() throws FileNotFoundException {
+       Collection var1 = null;
+       BufferedReader var2 = null;
+ 

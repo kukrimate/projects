@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\util\JsonSerializableSet.java	2014-11-28 15:11:04.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\util\JsonSerializableSet.java	2014-11-28 14:55:04.901312600 +0100
+@@ -42,16 +42,4 @@
+    protected Set delegate() {
+       return this.underlyingSet;
+    }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   protected Collection delegate() {
+-      return this.delegate();
+-   }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   protected Object delegate() {
+-      return this.delegate();
+-   }
+ }

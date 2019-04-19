@@ -1,0 +1,88 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\server\management\ServerConfigurationManager.java	2014-11-28 15:11:00.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\server\management\ServerConfigurationManager.java	2014-12-02 18:35:51.863141600 +0100
+@@ -75,11 +75,12 @@
+ import org.apache.logging.log4j.Logger;
+ 
+ public abstract class ServerConfigurationManager {
+-
+-   public static final File FILE_PLAYERBANS = new File("banned-players.json");
+-   public static final File FILE_IPBANS = new File("banned-ips.json");
+-   public static final File FILE_OPS = new File("ops.json");
+-   public static final File FILE_WHITELIST = new File("whitelist.json");
++   //CraftStone start
++   public static final File FILE_PLAYERBANS = new File(MinecraftServer.CONFIG_DIR, "banned-players.json");
++   public static final File FILE_IPBANS = new File(MinecraftServer.CONFIG_DIR, "banned-ips.json");
++   public static final File FILE_OPS = new File(MinecraftServer.CONFIG_DIR, "ops.json");
++   public static final File FILE_WHITELIST = new File(MinecraftServer.CONFIG_DIR, "whitelist.json");
++   //CraftStone end
+    private static final Logger logger = LogManager.getLogger();
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd \'at\' HH:mm:ss z");
+    private final MinecraftServer mcServer;
+@@ -241,7 +242,7 @@
+    }
+ 
+    public NBTTagCompound readPlayerDataFromFile(EntityPlayerMP var1) {
+-      NBTTagCompound var2 = this.mcServer.worldServers[0].getWorldInfo().getPlayerNBTTagCompound();
++      NBTTagCompound var2 = var1.worldObj.getWorldInfo().getPlayerNBTTagCompound();
+       NBTTagCompound var3;
+       if(var1.getName().equals(this.mcServer.getServerOwner()) && var2 != null) {
+          var1.readFromNBT(var2);
+@@ -586,7 +587,7 @@
+    }
+ 
+    public void addOp(GameProfile var1) {
+-      this.ops.addEntry(new UserListOpsEntry(var1, this.mcServer.getOpPermissionLevel()));
++      this.ops.addEntry(new UserListOpsEntry(var1)); //CraftStone
+    }
+ 
+    public void removeOp(GameProfile var1) {
+@@ -597,8 +598,8 @@
+       return !this.whiteListEnforced || this.ops.hasEntry(var1) || this.whiteListedPlayers.hasEntry(var1);
+    }
+ 
+-   public boolean canSendCommands(GameProfile var1) {
+-      return this.ops.hasEntry(var1) || this.mcServer.isSinglePlayer() && this.mcServer.worldServers[0].getWorldInfo().areCommandsAllowed() && this.mcServer.getServerOwner().equalsIgnoreCase(var1.getName()) || this.commandsAllowedForAll;
++   public boolean canSendCommands(GameProfile var1) { //TEMP
++      return this.ops.hasEntry(var1) || this.mcServer.isSinglePlayer() && this.mcServer.worldServers.get(0).getWorldInfo().areCommandsAllowed() && this.mcServer.getServerOwner().equalsIgnoreCase(var1.getName()) || this.commandsAllowedForAll;
+    }
+ 
+    public EntityPlayerMP getPlayerByUsername(String var1) {
+@@ -668,8 +669,8 @@
+ 
+    public void loadWhiteList() {}
+ 
+-   public void updateTimeAndWeatherForPlayer(EntityPlayerMP var1, WorldServer var2) {
+-      WorldBorder var3 = this.mcServer.worldServers[0].getWorldBorder();
++   public void updateTimeAndWeatherForPlayer(EntityPlayerMP var1, WorldServer var2) { //TEMP
++      WorldBorder var3 = this.mcServer.worldServers.get(0).getWorldBorder();
+       var1.playerNetServerHandler.sendPacket(new S44PacketWorldBorder(var3, S44PacketWorldBorder.Action.INITIALIZE));
+       var1.playerNetServerHandler.sendPacket(new S03PacketTimeUpdate(var2.getTotalWorldTime(), var2.getWorldTime(), var2.getGameRules().getGameRuleBooleanValue("doDaylightCycle")));
+       if(var2.isRaining()) {
+@@ -694,8 +695,8 @@
+       return this.maxPlayers;
+    }
+ 
+-   public String[] getAvailablePlayerDat() {
+-      return this.mcServer.worldServers[0].getSaveHandler().getPlayerNBTManager().getAvailablePlayerDat();
++   public String[] getAvailablePlayerDat() { //TEMP
++      return this.mcServer.worldServers.get(0).getSaveHandler().getPlayerNBTManager().getAvailablePlayerDat();
+    }
+ 
+    public boolean isWhiteListEnabled() {
+@@ -783,13 +784,9 @@
+    public void setViewDistance(int var1) {
+       this.viewDistance = var1;
+       if(this.mcServer.worldServers != null) {
+-         WorldServer[] var2 = this.mcServer.worldServers;
+-         int var3 = var2.length;
+-
+-         for(int var4 = 0; var4 < var3; ++var4) {
+-            WorldServer var5 = var2[var4];
+-            if(var5 != null) {
+-               var5.getPlayerManager().func_152622_a(var1);
++         for(WorldServer world : this.mcServer.worldServers) {
++            if(world != null) {
++            	world.getPlayerManager().func_152622_a(var1);
+             }
+          }
+ 

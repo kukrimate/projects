@@ -1,0 +1,36 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\server\CommandMessage.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\server\CommandMessage.java	2014-12-02 18:27:04.542650400 +0100
+@@ -1,6 +1,5 @@
+ package net.minecraft.command.server;
+ 
+-import java.util.Arrays;
+ import java.util.List;
+ import net.minecraft.command.CommandBase;
+ import net.minecraft.command.ICommandSender;
+@@ -16,23 +15,19 @@
+ 
+ public class CommandMessage extends CommandBase {
+ 
+-   public List getCommandAliases() {
+-      return Arrays.asList(new String[]{"w", "msg"});
++   public String[] getCommandAliases() {
++      return new String[]{"w", "msg"};
+    }
+ 
+    public String getCommandName() {
+       return "tell";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 0;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.message.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws WrongUsageException, PlayerNotFoundException {
+       if(var2.length < 2) {
+          throw new WrongUsageException("commands.message.usage", new Object[0]);
+       } else {

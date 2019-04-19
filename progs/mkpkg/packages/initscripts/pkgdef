@@ -1,0 +1,10 @@
+pkg_name="initscripts"
+pkg_ver="0.1"
+pkg_src=(inittab rc.startup)
+
+package_target()
+{
+	cd $ARCHIVE_DIR
+	install -D -m644 $SRC_DIR/inittab etc/inittab
+	install -D -m744 $SRC_DIR/rc.startup etc/init.d/rc.startup
+}

@@ -1,0 +1,20 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\enchantment\EnchantmentProtection.java	2014-11-28 15:10:40.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\enchantment\EnchantmentProtection.java	2014-11-30 18:48:51.237421100 +0100
+@@ -61,7 +61,7 @@
+    }
+ 
+    public static int getFireTimeForEntity(Entity var0, int var1) {
+-      int var2 = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.fireProtection.effectId, var0.getInventory());
++      int var2 = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.fireProtection.effectId, var0.getVanillaInventory());
+       if(var2 > 0) {
+          var1 -= MathHelper.floor_float((float)var1 * (float)var2 * 0.15F);
+       }
+@@ -70,7 +70,7 @@
+    }
+ 
+    public static double func_92092_a(Entity var0, double var1) {
+-      int var3 = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.blastProtection.effectId, var0.getInventory());
++      int var3 = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.blastProtection.effectId, var0.getVanillaInventory());
+       if(var3 > 0) {
+          var1 -= (double)MathHelper.floor_double(var1 * (double)((float)var3 * 0.15F));
+       }

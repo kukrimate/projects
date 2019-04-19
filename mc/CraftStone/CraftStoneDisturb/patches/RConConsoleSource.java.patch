@@ -1,0 +1,46 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\network\rcon\RConConsoleSource.java	2014-11-28 15:10:58.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\network\rcon\RConConsoleSource.java	2014-12-04 19:34:59.695891800 +0100
+@@ -1,5 +1,6 @@
+ package net.minecraft.network.rcon;
+ 
++import net.minecraft.command.CommandBase;
+ import net.minecraft.command.CommandResultStats;
+ import net.minecraft.command.ICommandSender;
+ import net.minecraft.entity.Entity;
+@@ -16,7 +17,7 @@
+    private StringBuffer buffer = new StringBuffer();
+ 
+ 
+-   public static RConConsoleSource func_175570_h() {
++   public static RConConsoleSource defaultRconCommandSender() {
+       return instance;
+    }
+ 
+@@ -40,11 +41,13 @@
+       this.buffer.append(var1.getUnformattedText());
+    }
+ 
+-   public boolean canCommandSenderUseCommand(int var1, String var2) {
+-      return true;
+-   }
+ 
+-   public BlockPos getPosition() {
++	@Override
++	public boolean canCommandSenderUseCommand(String permission) { //CraftStone
++		return true;
++	}
++
++   public BlockPos getVanillaPosition() {
+       return new BlockPos(0, 0, 0);
+    }
+ 
+@@ -66,4 +69,9 @@
+ 
+    public void func_174794_a(CommandResultStats.Type var1, int var2) {}
+ 
++	@Override
++	public void sendMessage(String message) {
++		this.addChatMessage(new ChatComponentText(message));
++	}
++
+ }

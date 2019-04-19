@@ -1,0 +1,22 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\tileentity\TileEntityCommandBlock.java	2014-11-28 15:11:02.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\tileentity\TileEntityCommandBlock.java	2014-11-28 18:09:51.757224500 +0100
+@@ -14,7 +14,7 @@
+ public class TileEntityCommandBlock extends TileEntity {
+ 
+    private final CommandBlockLogic field_145994_a = new CommandBlockLogic() {
+-      public BlockPos getPosition() {
++      public BlockPos getVanillaPosition() {
+          return TileEntityCommandBlock.this.pos;
+       }
+       public Vec3 getPositionVector() {
+@@ -33,6 +33,10 @@
+       public Entity getCommandSenderEntity() {
+          return null;
+       }
++	@Override
++	public void sendMessage(String message) {
++		//CraftStone dummy method
++	}
+    };
+ 
+ 

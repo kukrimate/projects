@@ -1,0 +1,152 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\entity\Entity.java	2014-11-28 15:10:42.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\entity\Entity.java	2014-12-02 18:20:32.904306500 +0100
+@@ -5,6 +5,10 @@
+ import java.util.Random;
+ import java.util.UUID;
+ import java.util.concurrent.Callable;
++
++import com.craftstone.stone.math.VectorDouble;
++import com.craftstone.stone.world.Chunk;
++
+ import net.minecraft.block.Block;
+ import net.minecraft.block.BlockFence;
+ import net.minecraft.block.BlockFenceGate;
+@@ -49,7 +53,7 @@
+ import net.minecraft.world.World;
+ import net.minecraft.world.WorldServer;
+ 
+-public abstract class Entity implements ICommandSender {
++public abstract class Entity implements ICommandSender, com.craftstone.stone.entity.Entity {
+ 
+    private static final AxisAlignedBB field_174836_a = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+    private static int nextEntityID;
+@@ -1322,7 +1326,7 @@
+       return 300;
+    }
+ 
+-   public ItemStack[] getInventory() {
++   public ItemStack[] getVanillaInventory() {
+       return null;
+    }
+ 
+@@ -1581,20 +1585,12 @@
+          public String call() {
+             return EntityList.getEntityString(Entity.this) + " (" + Entity.this.getClass().getCanonicalName() + ")";
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var1.addCrashSection("Entity ID", Integer.valueOf(this.entityId));
+       var1.addCrashSectionCallable("Entity Name", new Callable() {
+          public String call() {
+             return Entity.this.getName();
+          }
+-         // $FF: synthetic method
+-         public Object call() {
+-            return this.call();
+-         }
+       });
+       var1.addCrashSection("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", new Object[]{Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ)}));
+       var1.addCrashSection("Entity\'s Block location", CrashReportCategory.getCoordinateInfo((double)MathHelper.floor_double(this.posX), (double)MathHelper.floor_double(this.posY), (double)MathHelper.floor_double(this.posZ)));
+@@ -1706,11 +1702,11 @@
+ 
+    public void addChatMessage(IChatComponent var1) {}
+ 
+-   public boolean canCommandSenderUseCommand(int var1, String var2) {
++   public boolean canCommandSenderUseCommand(String permission) {
+       return true;
+    }
+ 
+-   public BlockPos getPosition() {
++   public BlockPos getVanillaPosition() {
+       return new BlockPos(this.posX, this.posY + 0.5D, this.posZ);
+    }
+ 
+@@ -1761,5 +1757,84 @@
+ 
+       EnchantmentHelper.func_151385_b(var1, var2);
+    }
+-
++   
++   //CraftStone
++   
++   @Override
++   public void sendMessage(String message) {
++	   this.addChatMessage(new ChatComponentText(message));
++   }
++
++	@Override
++	public com.craftstone.stone.world.World getWorldOfEntity() {
++		return this.worldObj;
++	}
++	
++	@Override
++	public Chunk getChunk() {
++		return this.worldObj.getChunkFromBlockCoords(this.getVanillaPosition());
++	}
++	
++	@Override
++	public void teleportTo(com.craftstone.stone.world.World newWorld) {
++		// TODO Auto-generated method stub
++		
++	}
++	
++	@Override
++	public VectorDouble getPosition() {
++		return new VectorDouble(this.getVanillaPosition().getX(), this.getVanillaPosition().getY(),this.getVanillaPosition().getZ());
++	}
++	
++	@Override
++	public void setPosition(VectorDouble position) {
++		this.posX = position.getX();
++		this.posY = position.getY();
++		this.posZ = position.getZ();
++	}
++	
++	@Override
++	public float getFallDistance() {
++		return this.fallDistance;
++	}
++	
++	@Override
++	public void setFallDistance(float fallDistance) {
++		this.fallDistance = fallDistance;
++	}
++	
++	@Override
++	public float getWidth() {
++		return this.width;
++	}
++	
++	@Override
++	public float getHeight() {
++		return this.height;
++	}
++	
++	@Override
++	public float getStepHeight() {
++		return this.stepHeight;
++	}
++	
++	@Override
++	public void setStepHeight(float height) {
++		this.stepHeight = height;
++	}
++	
++	@Override
++	public void setFireResistance(int resistence) {
++		this.fireResistance = resistence;
++	}
++	
++	@Override
++	public int getFireResistance() {
++		return this.fireResistance;
++	}
++	
++	@Override
++	public boolean isInPortal() {
++		return this.inPortal;
++	}
+ }

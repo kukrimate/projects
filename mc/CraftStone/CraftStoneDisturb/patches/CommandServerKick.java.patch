@@ -1,0 +1,19 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\command\CommandServerKick.java	2014-11-28 15:10:38.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\command\CommandServerKick.java	2014-12-02 18:25:37.254365600 +0100
+@@ -15,15 +15,11 @@
+       return "kick";
+    }
+ 
+-   public int getRequiredPermissionLevel() {
+-      return 3;
+-   }
+-
+    public String getCommandUsage(ICommandSender var1) {
+       return "commands.kick.usage";
+    }
+ 
+-   public void processCommand(ICommandSender var1, String[] var2) {
++   public void processCommand(ICommandSender var1, String[] var2) throws PlayerNotFoundException, WrongUsageException {
+       if(var2.length > 0 && var2[0].length() > 1) {
+          EntityPlayerMP var3 = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(var2[0]);
+          String var4 = "Kicked by an operator.";

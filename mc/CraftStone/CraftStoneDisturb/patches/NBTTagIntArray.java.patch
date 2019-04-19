@@ -1,0 +1,30 @@
+--- D:\CRAFTSTONE\DiffMakerPrivate\source\orig\net\minecraft\nbt\NBTTagIntArray.java	2014-11-28 15:10:54.000000000 +0100
++++ D:\CRAFTSTONE\DiffMakerPrivate\source\new\net\minecraft\nbt\NBTTagIntArray.java	2014-11-28 14:55:04.805311100 +0100
+@@ -2,7 +2,9 @@
+ 
+ import java.io.DataInput;
+ import java.io.DataOutput;
++import java.io.IOException;
+ import java.util.Arrays;
++
+ import net.minecraft.nbt.NBTBase;
+ import net.minecraft.nbt.NBTSizeTracker;
+ 
+@@ -17,7 +19,7 @@
+       this.intArray = var1;
+    }
+ 
+-   void write(DataOutput var1) {
++   void write(DataOutput var1) throws IOException {
+       var1.writeInt(this.intArray.length);
+ 
+       for(int var2 = 0; var2 < this.intArray.length; ++var2) {
+@@ -26,7 +28,7 @@
+ 
+    }
+ 
+-   void read(DataInput var1, int var2, NBTSizeTracker var3) {
++   void read(DataInput var1, int var2, NBTSizeTracker var3) throws IOException {
+       int var4 = var1.readInt();
+       var3.read((long)(32 * var4));
+       this.intArray = new int[var4];
