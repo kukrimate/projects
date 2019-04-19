@@ -1,13 +1,13 @@
-#PKGTool
+# PKGTool
 A very lightweight package manager written in sh. It does not support online repositories nor dependency resolution, it's only goal is to make removing and installing packages very easy.
 
-#Dependencies
+# Dependencies
 Pkgtool depends on bash, tar, sed and coreutils.
 
-#Packages
+# Packages
 Packages used by pkgtool are simple gzip compressed tarballs. A package optionally also can contain a directory called `pkgtool` which houses the `install.sh` script which if presents runs after extracting the package to the root directory.
 
-#License
+# License
 Copyright (c) 2015 Kukri Máté
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
