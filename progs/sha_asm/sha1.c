@@ -9,15 +9,15 @@ static void sha1_transform_generic(uint32_t *sha1_state, uint32_t *data_block)
 {
 	uint32_t a, b, c, d, e, f, k, t;
 	size_t i;
-	
+
 	a = sha1_state[0];
 	b = sha1_state[1];
 	c = sha1_state[2];
 	d = sha1_state[3];
 	e = sha1_state[4];
-	
+
 	uint32_t state[80];
-	
+
 	for (i = 0; i < 80; ++i)
 	{
 		if (i < 16) {
@@ -29,7 +29,7 @@ static void sha1_transform_generic(uint32_t *sha1_state, uint32_t *data_block)
 		} else {
 			state[i] = rotl32((state[i - 3] ^ state[i - 8] ^ state[i - 14] ^ state[i - 16]), 1);
 		}
-		
+
 		if (i < 20) {
 			f = b & c ^ ~b & d;
 			k = 0x5a827999;
@@ -43,7 +43,7 @@ static void sha1_transform_generic(uint32_t *sha1_state, uint32_t *data_block)
 			f = b ^ c ^ d;
 			k = 0xca62c1d6;
 		}
-		
+
 		t = rotl32(a, 5) + f + e + k + state[i];
 		e = d;
 		d = c;
@@ -51,13 +51,13 @@ static void sha1_transform_generic(uint32_t *sha1_state, uint32_t *data_block)
 		b = a;
 		a = t;
 	}
-	
+
 	sha1_state[0] += a;
 	sha1_state[1] += b;
 	sha1_state[2] += c;
 	sha1_state[3] += d;
 	sha1_state[4] += e;
-	
+
 	/* avoid leaving sensitive data in memory */
 	a = b = c = d = e = f = k = t = 0;
 	explicit_bzero(state, 80 * sizeof(uint32_t));
@@ -90,11 +90,11 @@ void sha1_update(struct sha1_ctx *ctx, uint8_t *data, size_t data_size)
 		data_size -= 64 - ctx->buffer_counter;
 		data += 64 - ctx->buffer_counter;
 		ctx->buffer_counter = 0;
-		
+
 		sha1_transform(ctx->state, (uint32_t *) ctx->buffer);
 		ctx->data_counter += 64;
 	}
-	
+
 	if (data_size) {
 		memcpy(ctx->buffer + ctx->buffer_counter, data, data_size);
 		ctx->buffer_counter += data_size;
@@ -105,27 +105,27 @@ void sha1_final(struct sha1_ctx *ctx, uint8_t *md)
 {
 	size_t i;
 	uint64_t bit_length;
-	
+
 	/* if buffer size isn't less then 64 something went south */
 	assert(ctx->buffer_counter < 64);
-	
+
 	explicit_bzero(ctx->buffer + ctx->buffer_counter, 64 - ctx->buffer_counter);
 	ctx->buffer[ctx->buffer_counter] = 0x80;
-	
-	if (ctx->buffer_counter > 56) {
+
+	if (ctx->buffer_counter >= 56) {
 		sha1_transform(ctx->state, (uint32_t *) ctx->buffer);
 		explicit_bzero(ctx->buffer, 64);
 	}
-	
+
 	ctx->data_counter += ctx->buffer_counter;
 	ctx->buffer_counter = 0;
-	
+
 #ifdef LITTLE_ENDIAN
 	bit_length = bswap64((uint64_t) ctx->data_counter * 8);
 #else
 	bit_length = ctx->data_counter * 8;
 #endif
-	
+
 	memcpy(ctx->buffer + 56, &bit_length, sizeof(uint64_t));
 	sha1_transform(ctx->state, (uint32_t *) ctx->buffer);
 
@@ -135,7 +135,7 @@ void sha1_final(struct sha1_ctx *ctx, uint8_t *md)
 	}
 #endif
 	memcpy(md, ctx->state, 20);
-	
+
 	/* avoid leaving sensitive data in memory */
 	bit_length = 0;
 	explicit_bzero(ctx, sizeof(struct sha1_ctx));

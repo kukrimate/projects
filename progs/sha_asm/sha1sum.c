@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	uint8_t buffer[64];
 	uint8_t md[20];
 	size_t i;
-	
+
 	if (argc < 2) {
 		source = stdin;
 	} else {
@@ -27,19 +27,19 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	}
-	
+
 	sha1_init(&ctx);
-	
+
 	while(i = fread(buffer, 1, 64, source)) {
 		sha1_update(&ctx, buffer, i);
 	}
-	
+
 	sha1_final(&ctx, md);
-	
+
 	for (i = 0; i < 20; ++i) {
 		printf("%02x", md[i]);
 	}
 	printf("\n");
-	
+
 	return 0;
 }
